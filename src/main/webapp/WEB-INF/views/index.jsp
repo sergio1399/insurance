@@ -15,7 +15,7 @@
 <hr>
 
 <div class="form">
-    <form action="contract" method="post" onsubmit="return validate()">
+    <form action="/contract" method="post" onsubmit="return validate()">
         <table>
             <tr>
                 <td>Enter Your name</td>
@@ -23,6 +23,9 @@
                 <td><input type="submit" value="Submit"></td>
             </tr>
         </table>
+        <input type="hidden"
+               name="${_csrf.parameterName}"
+               value="${_csrf.token}"/>
     </form>
 </div>
 
