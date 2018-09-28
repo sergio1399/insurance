@@ -54,7 +54,7 @@ public class InsuranceController {
         logger.debug("saveOrUpdateContract() : {}", contract);
         if (result.hasErrors()) {
             initModel(model);
-            return "contracts/contractform";
+            return "contractform";
         } else {
             redirectAttributes.addFlashAttribute("css", "success");
             if(contract.isNew()){
