@@ -2,11 +2,7 @@
 
 <head>
 <title>Spring MVC test Insurance</title>
-
-<spring:url value="/resources/static/hello.css" var="coreCss" />
-<spring:url value="/resources/static/bootstrap.min.css" var="bootstrapCss" />
-<link href="${bootstrapCss}" rel="stylesheet" />
-<link href="${coreCss}" rel="stylesheet" />
+	<link href="/webjars/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <spring:url value="/" var="urlHome" />

@@ -1,33 +1,67 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page session="false"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <!DOCTYPE html>
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<html lang="en">
 
-    <!-- Static content -->
-    <link rel="stylesheet" href="/resources/static/style.css">
-    <script type="text/javascript" src="/resources/static/app.js"></script>
+<jsp:include page="../fragments/header.jsp" />
 
-    <title>Spring Boot</title>
-</head>
-<body>
-<h1>Spring Boot - MVC web application example</h1>
-<hr>
+<div class="container">
 
-<div class="form">
-    <form action="/contract" method="post" onsubmit="return validate()">
-        <table>
-            <tr>
-                <td>Enter Your name</td>
-                <td><input id="name" name="name"></td>
-                <td><input type="submit" value="Submit"></td>
-            </tr>
-        </table>
-        <input type="hidden"
-               name="${_csrf.parameterName}"
-               value="${_csrf.token}"/>
-    </form>
+    <c:if test="${not empty msg}">
+        <div class="alert alert-${css} alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert"
+                    aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <strong>${msg}</strong>
+        </div>
+    </c:if>
+
+    <h1>Contract Detail</h1>
+    <br />
+
+    <div class="row">
+        <label class="col-sm-2">Serie/Number</label>
+        <div class="col-sm-10">${contract.serie()} ${contract.number()}</div>
+    </div>
+
+    <div class="row">
+        <label class="col-sm-2">Type</label>
+        <div class="col-sm-10">${contract.contractTypeId()}</div>
+    </div>
+
+    <div class="row">
+        <label class="col-sm-2">Signed</label>
+        <div class="col-sm-10">${contract.signDate}</div>
+    </div>
+
+    <div class="row">
+        <label class="col-sm-2">From</label>
+        <div class="col-sm-10">${contract.openDate}</div>
+    </div>
+
+    <div class="row">
+        <label class="col-sm-2">To</label>
+        <div class="col-sm-10">${contract.expirationDate}</div>
+    </div>
+
+    <div class="row">
+        <label class="col-sm-2">NDS sum</label>
+        <div class="col-sm-10">${contract.ndsSum}</div>
+    </div>
+
+    <div class="row">
+        <label class="col-sm-2">Sum with NDS</label>
+        <div class="col-sm-10">${contract.sumWithNds}</div>
+    </div>
+
 </div>
+
+<jsp:include page="../fragments/footer.jsp" />
 
 </body>
 </html>

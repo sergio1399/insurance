@@ -41,14 +41,14 @@
         <c:forEach var="contract" items="${contracts}">
             <tr>
                 <td>
-                        ${contract.getSerie()}
+                        ${contract.serie} ${contract.number}
                 </td>
-                <td>${contract.getContractTypeId()}</td>
-                <td>${contract.getSignDate}</td>
-                <td>${contract.getOpenDate()}</td>
-                <td>${contract.getExpirationDate()}</td>
-                <td>${contract.getNdsSum()}</td>
-                <td>${contract.getSumWithNds()}</td>
+                <td>${contract.contractTypeId}</td>
+                <td>${contract.signDate}</td>
+                <td>${contract.openDate}</td>
+                <td>${contract.expirationDate}</td>
+                <td>${contract.ndsSum}</td>
+                <td>${contract.sumWithNds}</td>
                 <td>
                     <spring:url value="/contracts/${contract.id}" var="contractUrl" />
                     <spring:url value="/contracts/${contract.id}/remove" var="removeUrl" />
