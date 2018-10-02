@@ -1,13 +1,15 @@
 package sergio.ru.insurancetest.service;
 
-import sergio.ru.insurancetest.dto.Contract;
+import sergio.ru.insurancetest.dto.ContractDto;
+import sergio.ru.insurancetest.model.Contract;
 
 import java.util.List;
 
 public interface InsuranceService {
+
     Contract findById(Integer id);
 
-    List<Contract> findAll();
+    List<ContractDto> findAll();
 
     void saveOrUpdate(Contract contract);
 

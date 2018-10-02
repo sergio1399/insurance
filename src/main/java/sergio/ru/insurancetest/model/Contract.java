@@ -1,11 +1,11 @@
-package sergio.ru.insurancetest.dto;
+package sergio.ru.insurancetest.model;
 
 import java.time.LocalDate;
 
 public class Contract {
     private Integer id;
 
-    private Integer contractTypeId;
+    private String type;
 
     private String serie;
 
@@ -36,12 +36,12 @@ public class Contract {
         this.id = id;
     }
 
-    public Integer getContractTypeId() {
-        return contractTypeId;
+    public String getType() {
+        return type;
     }
 
-    public void setContractTypeId(Integer contractTypeId) {
-        this.contractTypeId = contractTypeId;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getSerie() {
@@ -120,7 +120,7 @@ public class Contract {
     public String toString() {
         return "Contract{" +
                 "id=" + id +
-                ", contractTypeId=" + contractTypeId +
+                ", type='" + type + '\'' +
                 ", serie='" + serie + '\'' +
                 ", number='" + number + '\'' +
                 ", signDate=" + signDate +

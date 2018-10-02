@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
-import sergio.ru.insurancetest.dto.Contract;
+import sergio.ru.insurancetest.model.Contract;
 import sergio.ru.insurancetest.service.InsuranceService;
 
 @Component

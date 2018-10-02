@@ -9,7 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import sergio.ru.insurancetest.dto.Contract;
+import sergio.ru.insurancetest.model.Contract;
 import sergio.ru.insurancetest.service.InsuranceService;
 import sergio.ru.insurancetest.validator.ContractFormValidator;
 
