@@ -66,8 +66,8 @@
             <div class="form-group ${status.error ? 'has-error' : ''}">
                 <label class="col-sm-2 control-label">Signed</label>
                 <div class="col-sm-10">
-                    <form:input path="signDate" type="date" class="form-control"
-                                   id="signDate" placeholder="signDate" />
+                    <form:input path="signDate" class="form-control"
+                                id="signDate" placeholder="signDate" />
                     <form:errors path="signDate" class="control-label" />
                 </div>
             </div>
@@ -77,7 +77,7 @@
             <div class="form-group ${status.error ? 'has-error' : ''}">
                 <label class="col-sm-2 control-label">Open Date</label>
                 <div class="col-sm-10">
-                    <form:input path="openDate" type="date" class="form-control"
+                    <form:input path="openDate" class="form-control"
                                    id="openDate" placeholder="openDate" />
                     <form:errors path="openDate" class="control-label" />
                 </div>
@@ -88,7 +88,7 @@
             <div class="form-group ${status.error ? 'has-error' : ''}">
                 <label class="col-sm-2 control-label">End Date</label>
                 <div class="col-sm-10">
-                    <form:input path="expirationDate" type="date" class="form-control"
+                    <form:input path="expirationDate" class="form-control"
                                 id="expirationDate" placeholder="expirationDate" />
                     <form:errors path="expirationDate" class="control-label" />
                 </div>

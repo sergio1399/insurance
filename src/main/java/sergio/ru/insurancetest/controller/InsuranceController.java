@@ -68,8 +68,8 @@ public class InsuranceController {
                                    final RedirectAttributes redirectAttributes) throws ParseException {
         logger.debug("saveOrUpdateContract() : {}", contractDto);
         if (result.hasErrors()) {
+            model.addAttribute("contractForm", contractDto);
             initModel(model);
-            model.addAttribute(contractDto);
             return "contractform";
         } else {
             redirectAttributes.addFlashAttribute("css", "success");

@@ -1,5 +1,7 @@
 package sergio.ru.insurancetest.dto;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 
 public class ContractDto {
@@ -12,10 +14,13 @@ public class ContractDto {
 
     private String type;
 
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
     private LocalDate signDate;
 
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
     private LocalDate openDate;
 
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
     private LocalDate expirationDate;
 
     private Double sumNoNds;
