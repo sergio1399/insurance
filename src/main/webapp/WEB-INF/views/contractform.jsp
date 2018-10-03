@@ -21,7 +21,7 @@
     </c:choose>
     <br />
 
-    <spring:url value="/users" var="userActionUrl" />
+    <spring:url value="/contracts" var="contractActionUrl" />
 
     <%--@elvariable id="contractForm" type="sergio"--%>
     <form:form class="form-horizontal" method="post"
@@ -51,13 +51,13 @@
             </div>
         </spring:bind>
 
-        <spring:bind path="contractTypeId">
+        <spring:bind path="type">
             <div class="form-group ${status.error ? 'has-error' : ''}">
                 <label class="col-sm-2 control-label">Type</label>
                 <div class="col-sm-10">
-                    <form:input path="contractTypeId" type="text" class="form-control"
-                                   id="contractTypeId" placeholder="contractTypeId" />
-                    <form:errors path="contractTypeId" class="control-label" />
+                    <form:input path="type" type="text" class="form-control"
+                                   id="type" placeholder="type" />
+                    <form:errors path="type" class="type" />
                 </div>
             </div>
         </spring:bind>
@@ -113,6 +113,17 @@
                     <form:input path="sumWithNds" type="number" class="form-control"
                                 id="sumWithNds" placeholder="sumWithNds" />
                     <form:errors path="sumWithNds" class="control-label" />
+                </div>
+            </div>
+        </spring:bind>
+
+        <spring:bind path="vehicleNumber">
+            <div class="form-group ${status.error ? 'has-error' : ''}">
+                <label class="col-sm-2 control-label">Vehicle Number</label>
+                <div class="col-sm-10">
+                    <form:input path="vehicleNumber" type="text" class="form-control"
+                                id="vehicleNumber" placeholder="vehicleNumber" />
+                    <form:errors path="vehicleNumber" class="control-label" />
                 </div>
             </div>
         </spring:bind>

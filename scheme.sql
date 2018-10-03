@@ -4,7 +4,7 @@ CREATE SEQUENCE IF NOT EXISTS contract_type_ids;
 CREATE TABLE IF NOT EXISTS ContractType
 (
   id INTEGER PRIMARY KEY DEFAULT NEXTVAL('contract_type_ids'),
-  name VARCHAR(64) NOT NULL
+  name VARCHAR(64) NOT NULL UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS Vehicle
@@ -28,7 +28,9 @@ CREATE TABLE IF NOT EXISTS Contract
   nds_sum REAL NOT NULL,
   sum_with_nds REAL NOT NULL,
   vehicle_number VARCHAR(16) REFERENCES Vehicle(number),
-  note VARCHAR(255)
+  note VARCHAR(255),
+  CONSTRAINT unique_serie_number UNIQUE (serie, number),
+  CONSTRAINT correct_dates CHECK(open_date < expiration_date AND sign_date <= open_date)
 );
 
 

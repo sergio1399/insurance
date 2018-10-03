@@ -2,7 +2,11 @@ package sergio.ru.insurancetest.dao.impl;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import sergio.ru.insurancetest.dao.InsuranceRepository;
 import sergio.ru.insurancetest.model.Contract;
@@ -25,6 +29,16 @@ public class InsuranceRepositoryImpl implements InsuranceRepository {
     private static final String ALL_QUERY = "SELECT Contract.id, Contract.serie, Contract.number, Contract.sign_date, Contract.open_date, Contract.expiration_date, " +
                                             "Contract.nds_sum, Contract.sum_with_nds, Contract.vehicle_number, Contract.note, ContractType.name" +
                                             " FROM Contract, ContractType WHERE Contract.contract_type_id = ContractType.id";
+
+    private static final String REMOVE_QUERY = "DELETE FROM Contract WHERE id= :id";
+
+    private static final String INSERT_QUERY = "INSERT INTO Contract(contract_type_id, serie, number, sign_date, open_date, expiration_date, nds_sum, sum_with_nds, vehicle_number, note) "
+            + "SELECT ct.id, :serie, :number, :sign_date, :open_date, :expiration_date, :nds_sum, :sum_with_nds, :vehicle_number, :note FROM ContractType ct WHERE ct.name = :type";
+
+    private static final String UPDATE_QUERY = "UPDATE Contract SET serie=:serie, number=:number, sign_date=:sign_date, "
+            + "open_date=:open_date, expiration_date=:expiration_date, nds_sum=:nds_sum, sum_with_nds=:sum_with_nds, "
+            + "contract_type_id=(SELECT ct.id FROM ContractType ct WHERE ct.name =:type), "
+            + "vehicle_number=:vehicle_number, note=:note WHERE id=:id";
 
     public InsuranceRepositoryImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
@@ -66,7 +80,19 @@ public class InsuranceRepositoryImpl implements InsuranceRepository {
 
     @Override
     public Vehicle findVehicle(String number) {
-        return null;
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("number", number);
+        String sql = "SELECT * FROM Vehicle WHERE number=:number";
+
+        Vehicle result = null;
+        try {
+            result = namedParameterJdbcTemplate
+                    .queryForObject(sql, params, new VehicleMapper());
+        } catch (EmptyResultDataAccessException e) {
+            // do nothing, return null
+        }
+
+        return result;
     }
 
     @Override
@@ -78,17 +104,40 @@ public class InsuranceRepositoryImpl implements InsuranceRepository {
 
     @Override
     public void save(Contract contract) {
+        String sql = INSERT_QUERY;
 
+        namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(contract));
     }
 
     @Override
     public void update(Contract contract) {
+        String sql = UPDATE_QUERY;
 
+        namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(contract));
     }
 
     @Override
     public void remove(Integer id) {
+        String sql = REMOVE_QUERY;
+        namedParameterJdbcTemplate.update(sql, new MapSqlParameterSource("id", id));
+    }
 
+    private SqlParameterSource getSqlParameterByModel(Contract contract) {
+
+        MapSqlParameterSource paramSource = new MapSqlParameterSource();
+        paramSource.addValue("id", contract.getId());
+        paramSource.addValue("serie", contract.getSerie());
+        paramSource.addValue("number", contract.getNumber());
+        paramSource.addValue("sign_date", contract.getSignDate());
+        paramSource.addValue("open_date", contract.getOpenDate());
+        paramSource.addValue("expiration_date", contract.getExpirationDate());
+        paramSource.addValue("nds_sum", contract.getNdsSum());
+        paramSource.addValue("sum_with_nds", contract.getSumWithNds());
+        paramSource.addValue("vehicle_number", contract.getVehicleNumber());
+        paramSource.addValue("note", contract.getNote());
+        paramSource.addValue("type", contract.getType());
+
+        return paramSource;
     }
 
     private static final class ContractMapper implements RowMapper<Contract> {

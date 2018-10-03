@@ -3,6 +3,7 @@ package sergio.ru.insurancetest.model;
 import java.time.LocalDate;
 
 public class Contract {
+
     private Integer id;
 
     private String type;

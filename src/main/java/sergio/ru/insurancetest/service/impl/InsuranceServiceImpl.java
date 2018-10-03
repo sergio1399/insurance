@@ -1,6 +1,7 @@
 package sergio.ru.insurancetest.service.impl;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import sergio.ru.insurancetest.dao.InsuranceRepository;
 import sergio.ru.insurancetest.dto.ContractDto;
 import sergio.ru.insurancetest.model.Contract;
@@ -18,18 +19,20 @@ public class InsuranceServiceImpl implements InsuranceService {
         this.repository = repository;
     }
 
+    @Transactional
     @Override
     public Contract findById(Integer id) {
         return repository.findById(id);
     }
 
+    @Transactional
     @Override
-    public List<ContractDto> findAll() {
+    public List<Contract> findAll() {
         List<Contract> contracts = repository.findAllContracts();
-        List<ContractDto> dtos = new ArrayList<>();
-        return dtos;
+        return contracts;
     }
 
+    @Transactional
     @Override
     public void saveOrUpdate(Contract contract) {
         if (findById(contract.getId())==null) {
@@ -39,6 +42,7 @@ public class InsuranceServiceImpl implements InsuranceService {
         }
     }
 
+    @Transactional
     @Override
     public void remove(int id) {
         repository.remove(id);

@@ -1,5 +1,6 @@
 package sergio.ru.insurancetest.controller;
 
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -9,24 +10,34 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import sergio.ru.insurancetest.dto.ContractDto;
 import sergio.ru.insurancetest.model.Contract;
 import sergio.ru.insurancetest.service.InsuranceService;
+import sergio.ru.insurancetest.utils.ContractConverter;
 import sergio.ru.insurancetest.validator.ContractFormValidator;
 
+import java.text.ParseException;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class InsuranceController {
 
     private final Logger logger = LoggerFactory.getLogger(InsuranceController.class);
 
+    private static final String DEFAULT_TYPE = "OSAGO";
+
     private InsuranceService service;
+
+    private ModelMapper modelMapper;
 
     private ContractFormValidator validator;
 
-    public InsuranceController(InsuranceService service, ContractFormValidator validator) {
+    public InsuranceController(InsuranceService service, ContractFormValidator validator, ModelMapper modelMapper) {
         this.service = service;
         this.validator = validator;
+        this.modelMapper = modelMapper;
     }
 
     @InitBinder
@@ -43,42 +54,47 @@ public class InsuranceController {
     @RequestMapping(value = "/contracts", method = RequestMethod.GET)
     public String showAllContracts(Model model) {
         logger.debug("showAllContracts()");
-        model.addAttribute("contracts", service.findAll());
+        List<Contract> contracts = service.findAll();
+        List<ContractDto> dtos = contracts.stream()
+                .map(contract -> ContractConverter.convertToDto(contract, modelMapper))
+                .collect(Collectors.toList());
+        model.addAttribute("contracts", dtos);
         return "list";
     }
 
     @RequestMapping(value = "/contracts", method = RequestMethod.POST)
-    public String saveOrUpdateContract(@ModelAttribute("userForm") @Validated Contract contract,
+    public String saveOrUpdateContract(@ModelAttribute("userForm") @Validated ContractDto contractDto,
                                    BindingResult result, Model model,
-                                   final RedirectAttributes redirectAttributes) {
-        logger.debug("saveOrUpdateContract() : {}", contract);
+                                   final RedirectAttributes redirectAttributes) throws ParseException {
+        logger.debug("saveOrUpdateContract() : {}", contractDto);
         if (result.hasErrors()) {
             initModel(model);
+            model.addAttribute(contractDto);
             return "contractform";
         } else {
             redirectAttributes.addFlashAttribute("css", "success");
-            if(contract.isNew()){
+            if(contractDto.isNew()){
                 redirectAttributes.addFlashAttribute("msg", "Contract added successfully!");
             }else{
                 redirectAttributes.addFlashAttribute("msg", "Contract updated successfully!");
             }
 
-            service.saveOrUpdate(contract);
+            service.saveOrUpdate(ContractConverter.convertToModel(contractDto, modelMapper));
 
-            return "redirect:/contracts/" + contract.getId();
+            return "redirect:/contracts/" + contractDto.getId();
         }
     }
 
     @RequestMapping(value = "/contracts/add", method = RequestMethod.GET)
     public String showAddContractForm(Model model) {
         logger.debug("showAddContractForm()");
-        Contract contract = new Contract();
-        contract.setContractTypeId(2);
+        ContractDto contractDto = new ContractDto();
+        contractDto.setType(DEFAULT_TYPE);
         LocalDate today = LocalDate.now();
-        contract.setSignDate(today);
-        contract.setOpenDate(today);
-        contract.setExpirationDate(today.plusYears(1));
-        model.addAttribute("contractForm", contract);
+        contractDto.setSignDate(today);
+        contractDto.setOpenDate(today);
+        contractDto.setExpirationDate(today.plusYears(1));
+        model.addAttribute("contractForm", contractDto);
 
         initModel(model);
 
@@ -88,8 +104,7 @@ public class InsuranceController {
     @RequestMapping(value = "/contracts/{id}/update", method = RequestMethod.GET)
     public String showUpdateContractForm(@PathVariable("id") int id, Model model) {
         logger.debug("showUpdateContractForm() : {}", id);
-        Contract contract = service.findById(id);
-        model.addAttribute("contractForm", contract);
+        model.addAttribute("contractForm", ContractConverter.convertToDto(service.findById(id), modelMapper));
 
         initModel(model);
 
@@ -110,12 +125,12 @@ public class InsuranceController {
     @RequestMapping(value = "/contracts/{id}", method = RequestMethod.GET)
     public String showContract(@PathVariable("id") int id, Model model) {
         logger.debug("showContract() id: {}", id);
-        Contract contract = service.findById(id);
-        if (contract == null) {
+        ContractDto contractDto = ContractConverter.convertToDto(service.findById(id), modelMapper);
+        if (contractDto == null) {
             model.addAttribute("css", "danger");
             model.addAttribute("msg", "Contract not found");
         }
-        model.addAttribute("contract", contract);
+        model.addAttribute("contract", contractDto);
 
         return "show";
     }
@@ -123,5 +138,7 @@ public class InsuranceController {
     private void initModel(Model model) {
 
     }
+
+
 
 }

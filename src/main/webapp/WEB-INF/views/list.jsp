@@ -27,13 +27,14 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th>Serie/Number</th>
+            <th>Serie-Number</th>
             <th>Type</th>
             <th>Signed</th>
             <th>From</th>
             <th>To</th>
             <th>NDS sum</th>
             <th>Sum with NDS</th>
+            <th>Vehicle Number</th>
             <th>Action</th>
         </tr>
         </thead>
@@ -41,14 +42,15 @@
         <c:forEach var="contract" items="${contracts}">
             <tr>
                 <td>
-                        ${contract.serie} ${contract.number}
+                        ${contract.serie}-${contract.number}
                 </td>
-                <td>${contract.contractTypeId}</td>
+                <td>${contract.type}</td>
                 <td>${contract.signDate}</td>
                 <td>${contract.openDate}</td>
                 <td>${contract.expirationDate}</td>
                 <td>${contract.ndsSum}</td>
                 <td>${contract.sumWithNds}</td>
+                <td>${contract.vehicleNumber}</td>
                 <td>
                     <spring:url value="/contracts/${contract.id}" var="contractUrl" />
                     <spring:url value="/contracts/${contract.id}/remove" var="removeUrl" />

@@ -9,7 +9,7 @@ public interface InsuranceService {
 
     Contract findById(Integer id);
 
-    List<ContractDto> findAll();
+    List<Contract> findAll();
 
     void saveOrUpdate(Contract contract);
 

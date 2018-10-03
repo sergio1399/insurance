@@ -15,7 +15,7 @@
         <div class="alert alert-${css} alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert"
                     aria-label="Close">
-                <span aria-hidden="true">×</span>
+                <span aria-hidden="true">x</span>
             </button>
             <strong>${msg}</strong>
         </div>
@@ -25,13 +25,13 @@
     <br />
 
     <div class="row">
-        <label class="col-sm-2">Serie/Number</label>
-        <div class="col-sm-10">${contract.serie()} ${contract.number()}</div>
+        <label class="col-sm-2">Serie-Number</label>
+        <div class="col-sm-10">${contract.serie()}-${contract.number()}</div>
     </div>
 
     <div class="row">
         <label class="col-sm-2">Type</label>
-        <div class="col-sm-10">${contract.contractTypeId()}</div>
+        <div class="col-sm-10">${contract.type()}</div>
     </div>
 
     <div class="row">
@@ -57,6 +57,11 @@
     <div class="row">
         <label class="col-sm-2">Sum with NDS</label>
         <div class="col-sm-10">${contract.sumWithNds}</div>
+    </div>
+
+    <div class="row">
+        <label class="col-sm-2">Vehicle Number</label>
+        <div class="col-sm-10">${contract.vehicleNumber}</div>
     </div>
 
 </div>

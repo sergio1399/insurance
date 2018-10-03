@@ -4,9 +4,13 @@ import java.time.LocalDate;
 
 public class ContractDto {
 
-    private String serieNumber;
+    private Integer id;
 
-    private String contractType;
+    private String serie;
+
+    private String number;
+
+    private String type;
 
     private LocalDate signDate;
 
@@ -29,20 +33,36 @@ public class ContractDto {
     public ContractDto() {
     }
 
-    public String getSerieNumber() {
-        return serieNumber;
+    public Integer getId() {
+        return id;
     }
 
-    public void setSerieNumber(String serieNumber) {
-        this.serieNumber = serieNumber;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getContractType() {
-        return contractType;
+    public String getSerie() {
+        return serie;
     }
 
-    public void setContractType(String contractType) {
-        this.contractType = contractType;
+    public void setSerie(String serie) {
+        this.serie = serie;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public LocalDate getSignDate() {
@@ -73,16 +93,16 @@ public class ContractDto {
         return sumNoNds;
     }
 
-    public void setSumNoNds(Double sumNoNds) {
-        this.sumNoNds = sumNoNds;
+    public void setSumNoNds() {
+        this.sumNoNds = sumWithNds - ndsSum;
     }
 
     public Double getNdsRate() {
         return ndsRate;
     }
 
-    public void setNdsRate(Double ndsRate) {
-        this.ndsRate = ndsRate;
+    public void setNdsRate() {
+        this.ndsRate = ndsSum / sumWithNds;
     }
 
     public Double getNdsSum() {
@@ -105,8 +125,12 @@ public class ContractDto {
         return minSumAccord;
     }
 
-    public void setMinSumAccord(Boolean minSumAccord) {
-        this.minSumAccord = minSumAccord;
+    public void setMinSumAccord() {
+        if (sumWithNds > 1000) {
+            this.minSumAccord = true;
+        } else {
+            this.minSumAccord = false;
+        }
     }
 
     public String getVehicleNumber() {
@@ -120,8 +144,10 @@ public class ContractDto {
     @Override
     public String toString() {
         return "ContractDto{" +
-                "serieNumber='" + serieNumber + '\'' +
-                ", contractType='" + contractType + '\'' +
+                "id=" + id +
+                ", serie='" + serie + '\'' +
+                ", number='" + number + '\'' +
+                ", type='" + type + '\'' +
                 ", signDate=" + signDate +
                 ", openDate=" + openDate +
                 ", expirationDate=" + expirationDate +
@@ -132,5 +158,9 @@ public class ContractDto {
                 ", minSumAccord=" + minSumAccord +
                 ", vehicleNumber='" + vehicleNumber + '\'' +
                 '}';
+    }
+
+    public boolean isNew() {
+        return (this.id == null);
     }
 }
