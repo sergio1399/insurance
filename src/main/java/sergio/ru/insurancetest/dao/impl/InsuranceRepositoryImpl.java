@@ -154,9 +154,6 @@ public class InsuranceRepositoryImpl implements InsuranceRepository {
             Contract contract = new Contract();
             contract.setId(rs.getInt("id"));
             contract.setType(rs.getString("name"));
-            //contract.setExpirationDate(rs.getDate("expiration_date").toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-            //contract.setSignDate(rs.getDate("sign_date").toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-            //contract.setOpenDate(rs.getDate("open_date").toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
             contract.setExpirationDate(rs.getDate("expiration_date").toLocalDate());
             contract.setSignDate(rs.getDate("sign_date").toLocalDate());
             contract.setOpenDate(rs.getDate("open_date").toLocalDate());

@@ -23,6 +23,8 @@
 
     <spring:url value="/contracts" var="contractActionUrl" />
 
+    <form:errors path="*" cssClass="errorblock" element="div"/>
+
     <%--@elvariable id="contractForm" type="sergio"--%>
     <form:form class="form-horizontal" method="post"
                modelAttribute="contractForm" action="${contractActionUrl}">

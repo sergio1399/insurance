@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.support.ResourceBundleMessageSource;
 
 @SpringBootApplication
 public class InsuranceTestApplication {
@@ -15,6 +16,13 @@ public class InsuranceTestApplication {
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();
+    }
+
+    @Bean
+    public ResourceBundleMessageSource messageSource() {
+        ResourceBundleMessageSource rb = new ResourceBundleMessageSource();
+        rb.setBasenames(new String[] { "messages/validation" });
+        return rb;
     }
 }
 

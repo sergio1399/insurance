@@ -63,12 +63,12 @@ public class InsuranceController {
     }
 
     @RequestMapping(value = "/contracts", method = RequestMethod.POST)
-    public String saveOrUpdateContract(@ModelAttribute("userForm") @Validated ContractDto contractDto,
+    public String saveOrUpdateContract(@ModelAttribute("contractForm") @Validated ContractDto contractDto,
                                    BindingResult result, Model model,
                                    final RedirectAttributes redirectAttributes) throws ParseException {
         LOGGER.info("saveOrUpdateContract() : {}", contractDto);
         if (result.hasErrors()) {
-            model.addAttribute("contractForm", contractDto);
+            //model.addAttribute("contractForm", contractDto);
             initModel(model);
             return "contractform";
         } else {

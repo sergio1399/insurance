@@ -27,12 +27,12 @@ public class ContractFormValidator implements Validator {
 
         ContractDto contract = (ContractDto) o;
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "serie", "NotEmpty.contractForm.serie");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "number", "NotEmpty.contractForm.number");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "signDate", "NotEmpty.contractForm.signDate");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "openDate", "NotEmpty.contractForm.openDate");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ndsSum","NotEmpty.contractForm.ndsSum");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "sumWithNds", "NotEmpty.contractForm.sumWithNds");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "vehicleNumber", "NotEmpty.contractForm.vehicleNumber");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "serie", "NotEmpty.contractForm.serie", "wrong serie");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "number", "NotEmpty.contractForm.number", "wrong number");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "signDate", "NotEmpty.contractForm.signDate", "wrong sign");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "openDate", "NotEmpty.contractForm.openDate", "wrong open");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ndsSum","NotEmpty.contractForm.ndsSum", "wrong exp");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "sumWithNds", "NotEmpty.contractForm.sumWithNds", "wrong sumWithNds");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "vehicleNumber", "NotEmpty.contractForm.vehicleNumber", "wrong vehicleNumber");
     }
 }
