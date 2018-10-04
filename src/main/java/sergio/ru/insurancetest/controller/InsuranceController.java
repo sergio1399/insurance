@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 @Controller
 public class InsuranceController {
 
-    private final Logger logger = LoggerFactory.getLogger(InsuranceController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(InsuranceController.class);
 
     private static final String DEFAULT_TYPE = "OSAGO";
 
@@ -47,13 +47,13 @@ public class InsuranceController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(Model model) {
-        logger.debug("index()");
+        LOGGER.info("index()");
         return "redirect:/contracts";
     }
 
     @RequestMapping(value = "/contracts", method = RequestMethod.GET)
     public String showAllContracts(Model model) {
-        logger.debug("showAllContracts()");
+        LOGGER.info("showAllContracts()");
         List<Contract> contracts = service.findAll();
         List<ContractDto> dtos = contracts.stream()
                 .map(contract -> ContractConverter.convertToDto(contract, modelMapper))
@@ -66,7 +66,7 @@ public class InsuranceController {
     public String saveOrUpdateContract(@ModelAttribute("userForm") @Validated ContractDto contractDto,
                                    BindingResult result, Model model,
                                    final RedirectAttributes redirectAttributes) throws ParseException {
-        logger.debug("saveOrUpdateContract() : {}", contractDto);
+        LOGGER.info("saveOrUpdateContract() : {}", contractDto);
         if (result.hasErrors()) {
             model.addAttribute("contractForm", contractDto);
             initModel(model);
@@ -81,13 +81,13 @@ public class InsuranceController {
 
             service.saveOrUpdate(ContractConverter.convertToModel(contractDto, modelMapper));
 
-            return "redirect:/contracts/" + contractDto.getId();
+            return "redirect:/contracts";
         }
     }
 
     @RequestMapping(value = "/contracts/add", method = RequestMethod.GET)
     public String showAddContractForm(Model model) {
-        logger.debug("showAddContractForm()");
+        LOGGER.info("showAddContractForm()");
         ContractDto contractDto = new ContractDto();
         contractDto.setType(DEFAULT_TYPE);
         LocalDate today = LocalDate.now();
@@ -103,7 +103,7 @@ public class InsuranceController {
 
     @RequestMapping(value = "/contracts/{id}/update", method = RequestMethod.GET)
     public String showUpdateContractForm(@PathVariable("id") int id, Model model) {
-        logger.debug("showUpdateContractForm() : {}", id);
+        LOGGER.info("showUpdateContractForm() : {}", id);
         model.addAttribute("contractForm", ContractConverter.convertToDto(service.findById(id), modelMapper));
 
         initModel(model);
@@ -114,7 +114,7 @@ public class InsuranceController {
     @RequestMapping(value = "/contracts/{id}/remove", method = RequestMethod.POST)
     public String removeContract(@PathVariable("id") int id,
                              final RedirectAttributes redirectAttributes) {
-        logger.debug("removeContract() : {}", id);
+        LOGGER.info("removeContract() : {}", id);
         service.remove(id);
         redirectAttributes.addFlashAttribute("css", "success");
         redirectAttributes.addFlashAttribute("msg", "Contract is removed!");
@@ -124,7 +124,7 @@ public class InsuranceController {
 
     @RequestMapping(value = "/contracts/{id}", method = RequestMethod.GET)
     public String showContract(@PathVariable("id") int id, Model model) {
-        logger.debug("showContract() id: {}", id);
+        LOGGER.info("showContract() id: {}", id);
         ContractDto contractDto = ContractConverter.convertToDto(service.findById(id), modelMapper);
         if (contractDto == null) {
             model.addAttribute("css", "danger");

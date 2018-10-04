@@ -26,12 +26,12 @@
 
     <div class="row">
         <label class="col-sm-2">Serie-Number</label>
-        <div class="col-sm-10">${contract.serie()}-${contract.number()}</div>
+        <div class="col-sm-10">${contract.serie}-${contract.number}</div>
     </div>
 
     <div class="row">
         <label class="col-sm-2">Type</label>
-        <div class="col-sm-10">${contract.type()}</div>
+        <div class="col-sm-10">${contract.type}</div>
     </div>
 
     <div class="row">

@@ -61,7 +61,7 @@
                     <button class="btn btn-primary"
                             onclick="location.href='${updateUrl}'">Update</button>
                     <button class="btn btn-danger"
-                            onclick="this.disabled=true;post('${removeUrl}')">Remove</button>
+                            onclick="this.disabled=true;$.post('${removeUrl}')">Remove</button>
                 </td>
             </tr>
         </c:forEach>

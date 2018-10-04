@@ -1,9 +1,10 @@
 package sergio.ru.insurancetest.service.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sergio.ru.insurancetest.dao.InsuranceRepository;
-import sergio.ru.insurancetest.dto.ContractDto;
 import sergio.ru.insurancetest.model.Contract;
 import sergio.ru.insurancetest.service.InsuranceService;
 
@@ -12,6 +13,8 @@ import java.util.List;
 
 @Service
 public class InsuranceServiceImpl implements InsuranceService {
+
+    private static final Logger logger = LoggerFactory.getLogger(InsuranceServiceImpl.class);
 
     private InsuranceRepository repository;
 

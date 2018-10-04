@@ -1,5 +1,7 @@
 package sergio.ru.insurancetest.dao.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -8,6 +10,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import sergio.ru.insurancetest.controller.InsuranceController;
 import sergio.ru.insurancetest.dao.InsuranceRepository;
 import sergio.ru.insurancetest.model.Contract;
 import sergio.ru.insurancetest.model.ContractType;
@@ -24,21 +27,23 @@ import java.util.Map;
 @Repository
 public class InsuranceRepositoryImpl implements InsuranceRepository {
 
-    NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private static final Logger logger = LoggerFactory.getLogger(InsuranceRepositoryImpl.class);
 
     private static final String ALL_QUERY = "SELECT Contract.id, Contract.serie, Contract.number, Contract.sign_date, Contract.open_date, Contract.expiration_date, " +
-                                            "Contract.nds_sum, Contract.sum_with_nds, Contract.vehicle_number, Contract.note, ContractType.name" +
-                                            " FROM Contract, ContractType WHERE Contract.contract_type_id = ContractType.id";
+            "Contract.nds_sum, Contract.sum_with_nds, Contract.vehicle_number, Contract.note, ContractType.name " +
+            "FROM Contract, ContractType WHERE Contract.contract_type_id = ContractType.id";
 
-    private static final String REMOVE_QUERY = "DELETE FROM Contract WHERE id= :id";
+    private static final String REMOVE_QUERY = "DELETE FROM Contract WHERE id=:id";
 
     private static final String INSERT_QUERY = "INSERT INTO Contract(contract_type_id, serie, number, sign_date, open_date, expiration_date, nds_sum, sum_with_nds, vehicle_number, note) "
-            + "SELECT ct.id, :serie, :number, :sign_date, :open_date, :expiration_date, :nds_sum, :sum_with_nds, :vehicle_number, :note FROM ContractType ct WHERE ct.name = :type";
+            + "SELECT ct.id, :serie, :number, :sign_date, :open_date, :expiration_date, :nds_sum, :sum_with_nds, :vehicle_number, :note FROM ContractType ct WHERE ct.name = :name";
 
     private static final String UPDATE_QUERY = "UPDATE Contract SET serie=:serie, number=:number, sign_date=:sign_date, "
             + "open_date=:open_date, expiration_date=:expiration_date, nds_sum=:nds_sum, sum_with_nds=:sum_with_nds, "
-            + "contract_type_id=(SELECT ct.id FROM ContractType ct WHERE ct.name =:type), "
+            + "contract_type_id=(SELECT ct.id FROM ContractType ct WHERE ct.name =:name), "
             + "vehicle_number=:vehicle_number, note=:note WHERE id=:id";
+
+    NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     public InsuranceRepositoryImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
@@ -48,7 +53,10 @@ public class InsuranceRepositoryImpl implements InsuranceRepository {
     public Contract findById(Integer id) {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("id", id);
-        String sql = "SELECT * FROM Contract WHERE id=:id";
+        //String sql = "SELECT * FROM Contract, ContractType WHERE id=:id AND Contract.contract_type_id = ContractType.id";
+        String sql = "SELECT * FROM Contract " +
+                     "INNER JOIN ContractType ON (Contract.contract_type_id = ContractType.id) " +
+                     "WHERE Contract.id=:id";
 
         Contract result = null;
         try {
@@ -135,7 +143,7 @@ public class InsuranceRepositoryImpl implements InsuranceRepository {
         paramSource.addValue("sum_with_nds", contract.getSumWithNds());
         paramSource.addValue("vehicle_number", contract.getVehicleNumber());
         paramSource.addValue("note", contract.getNote());
-        paramSource.addValue("type", contract.getType());
+        paramSource.addValue("name", contract.getType());
 
         return paramSource;
     }
