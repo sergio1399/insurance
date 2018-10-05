@@ -2,6 +2,7 @@ package sergio.ru.insurancetest.dao.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -12,9 +13,11 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import sergio.ru.insurancetest.controller.InsuranceController;
 import sergio.ru.insurancetest.dao.InsuranceRepository;
+import sergio.ru.insurancetest.dto.ContractDto;
 import sergio.ru.insurancetest.model.Contract;
 import sergio.ru.insurancetest.model.ContractType;
 import sergio.ru.insurancetest.model.Vehicle;
+import sergio.ru.insurancetest.utils.ContractConverter;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,11 +26,12 @@ import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Repository
 public class InsuranceRepositoryImpl implements InsuranceRepository {
 
-    private static final Logger logger = LoggerFactory.getLogger(InsuranceRepositoryImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(InsuranceRepositoryImpl.class);
 
     private static final String ALL_QUERY = "SELECT Contract.id, Contract.serie, Contract.number, Contract.sign_date, Contract.open_date, Contract.expiration_date, " +
             "Contract.nds_sum, Contract.sum_with_nds, Contract.vehicle_number, Contract.note, ContractType.name " +
@@ -43,6 +47,8 @@ public class InsuranceRepositoryImpl implements InsuranceRepository {
             + "contract_type_id=(SELECT ct.id FROM ContractType ct WHERE ct.name =:name), "
             + "vehicle_number=:vehicle_number, note=:note WHERE id=:id";
 
+    private static final String TYPES_QUERY = "SELECT id, name FROM ContractType";
+
     NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     public InsuranceRepositoryImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
@@ -53,7 +59,6 @@ public class InsuranceRepositoryImpl implements InsuranceRepository {
     public Contract findById(Integer id) {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("id", id);
-        //String sql = "SELECT * FROM Contract, ContractType WHERE id=:id AND Contract.contract_type_id = ContractType.id";
         String sql = "SELECT * FROM Contract " +
                      "INNER JOIN ContractType ON (Contract.contract_type_id = ContractType.id) " +
                      "WHERE Contract.id=:id";
@@ -112,9 +117,14 @@ public class InsuranceRepositoryImpl implements InsuranceRepository {
 
     @Override
     public void save(Contract contract) {
+        LOGGER.info("Repository save() contract:{}", contract);
         String sql = INSERT_QUERY;
+        try {
+            namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(contract));
+        } catch (DataAccessException e) {
+            LOGGER.error("Error during saving date: {}", e.getMessage());
+        }
 
-        namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(contract));
     }
 
     @Override
@@ -128,6 +138,16 @@ public class InsuranceRepositoryImpl implements InsuranceRepository {
     public void remove(Integer id) {
         String sql = REMOVE_QUERY;
         namedParameterJdbcTemplate.update(sql, new MapSqlParameterSource("id", id));
+    }
+
+    @Override
+    public List<String> getAllContractTypes() {
+        String sql = TYPES_QUERY;
+        List<ContractType> types = namedParameterJdbcTemplate.query(sql, new ContractTypeMapper());
+        List<String> result = types.stream()
+                .map(contractType -> contractType.getName())
+                .collect(Collectors.toList());
+        return result;
     }
 
     private SqlParameterSource getSqlParameterByModel(Contract contract) {

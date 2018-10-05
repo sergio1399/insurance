@@ -1,4 +1,4 @@
-<%@ page session="false"%>
+<%@ page session="false" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -57,8 +57,10 @@
             <div class="form-group ${status.error ? 'has-error' : ''}">
                 <label class="col-sm-2 control-label">Type</label>
                 <div class="col-sm-10">
-                    <form:input path="type" type="text" class="form-control"
-                                   id="type" placeholder="type" />
+                    <form:select path="type" class="form-control">
+                        <form:option value="NONE" label="--- Select ---" />
+                        <form:options items="${typeList}" />
+                    </form:select>
                     <form:errors path="type" class="type" />
                 </div>
             </div>

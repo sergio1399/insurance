@@ -18,7 +18,9 @@ import sergio.ru.insurancetest.validator.ContractFormValidator;
 
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Controller
@@ -68,7 +70,6 @@ public class InsuranceController {
                                    final RedirectAttributes redirectAttributes) throws ParseException {
         LOGGER.info("saveOrUpdateContract() : {}", contractDto);
         if (result.hasErrors()) {
-            //model.addAttribute("contractForm", contractDto);
             initModel(model);
             return "contractform";
         } else {
@@ -122,6 +123,16 @@ public class InsuranceController {
         return "redirect:/contracts";
     }
 
+    @RequestMapping(value = "/contracts/excel", method = RequestMethod.POST)
+    public String loadToExcel(final RedirectAttributes redirectAttributes) {
+        LOGGER.info("loadToExcel()");
+        service.loadToExcel();
+        redirectAttributes.addFlashAttribute("css", "success");
+        redirectAttributes.addFlashAttribute("msg", "Contracts loaded to excel!");
+
+        return "redirect:/contracts";
+    }
+
     @RequestMapping(value = "/contracts/{id}", method = RequestMethod.GET)
     public String showContract(@PathVariable("id") int id, Model model) {
         LOGGER.info("showContract() id: {}", id);
@@ -136,7 +147,12 @@ public class InsuranceController {
     }
 
     private void initModel(Model model) {
-
+        List<String> typeList = service.getAllContractTypes();
+        Map<String, String> types = new LinkedHashMap<String, String>();
+        for (int i = 0; i < typeList.size(); i++) {
+            types.put(typeList.get(i), typeList.get(i));
+        }
+        model.addAttribute("typeList", types);
     }
 
 

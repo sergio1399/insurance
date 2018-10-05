@@ -3,8 +3,10 @@ package sergio.ru.insurancetest.utils;
 import org.modelmapper.ModelMapper;
 import sergio.ru.insurancetest.dto.ContractDto;
 import sergio.ru.insurancetest.model.Contract;
+import sergio.ru.insurancetest.model.ContractType;
 
 import java.text.ParseException;
+import java.util.List;
 
 public class ContractConverter {
 

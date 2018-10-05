@@ -107,7 +107,7 @@ public class ContractDto {
     }
 
     public void setNdsRate() {
-        this.ndsRate = ndsSum / sumWithNds;
+        this.ndsRate = (ndsSum / sumWithNds) * 100;
     }
 
     public Double getNdsSum() {

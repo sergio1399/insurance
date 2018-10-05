@@ -21,4 +21,6 @@ public interface InsuranceRepository {
     void update(Contract contract);
 
     void remove(Integer id);
+
+    List<String> getAllContractTypes();
 }

@@ -7,6 +7,7 @@
 
 <spring:url value="/" var="urlHome" />
 <spring:url value="/contracts/add" var="urlAddContract" />
+<spring:url value="/contracts/excel" var="excelUrl" />
 
 <nav class="navbar navbar-inverse ">
 	<div class="container">
@@ -14,9 +15,10 @@
 			<a class="navbar-brand" href="${urlHome}">Spring MVC Form</a>
 		</div>
 		<div id="navbar">
-			<ul class="nav navbar-nav navbar-right">
-				<li class="active"><a href="${urlAddContract}">Add Contract</a></li>
-			</ul>
+			<button class="btn btn-dark"
+					onclick="location.href='${urlAddContract}'">Add Contract</button>
+			<button class="btn btn-success"
+					onclick="$.post('${excelUrl}')">Load to Excel</button>
 		</div>
 	</div>
 </nav>

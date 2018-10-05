@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sergio.ru.insurancetest.dao.InsuranceRepository;
 import sergio.ru.insurancetest.model.Contract;
+import sergio.ru.insurancetest.model.ContractType;
 import sergio.ru.insurancetest.service.InsuranceService;
 
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class InsuranceServiceImpl implements InsuranceService {
         return contracts;
     }
 
-    @Transactional
+    @Transactional(readOnly = false)
     @Override
     public void saveOrUpdate(Contract contract) {
         if (findById(contract.getId())==null) {
@@ -45,9 +46,15 @@ public class InsuranceServiceImpl implements InsuranceService {
         }
     }
 
-    @Transactional
+    @Transactional(readOnly = false)
     @Override
     public void remove(int id) {
         repository.remove(id);
+    }
+
+    @Transactional
+    @Override
+    public List<String> getAllContractTypes() {
+        return repository.getAllContractTypes();
     }
 }
