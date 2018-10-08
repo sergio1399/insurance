@@ -4,6 +4,7 @@ import sergio.ru.insurancetest.dto.ContractDto;
 import sergio.ru.insurancetest.model.Contract;
 import sergio.ru.insurancetest.model.ContractType;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface InsuranceService {
@@ -18,5 +19,5 @@ public interface InsuranceService {
 
     List<String> getAllContractTypes();
 
-    void loadToExcel();
+    void loadToExcel(List<ContractDto> contractDtoList) throws IOException;
 }

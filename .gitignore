@@ -11,6 +11,7 @@
 .sts4-cache
 .logs
 .target
+*.xlsx
 
 ### IntelliJ IDEA ###
 .idea

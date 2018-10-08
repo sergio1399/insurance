@@ -5,10 +5,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sergio.ru.insurancetest.dao.InsuranceRepository;
+import sergio.ru.insurancetest.dto.ContractDto;
 import sergio.ru.insurancetest.model.Contract;
 import sergio.ru.insurancetest.model.ContractType;
 import sergio.ru.insurancetest.service.InsuranceService;
+import sergio.ru.insurancetest.service.IntegrationService;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,8 +22,11 @@ public class InsuranceServiceImpl implements InsuranceService {
 
     private InsuranceRepository repository;
 
-    public InsuranceServiceImpl(InsuranceRepository repository) {
+    private IntegrationService integrationService;
+
+    public InsuranceServiceImpl(InsuranceRepository repository, IntegrationService integrationService) {
         this.repository = repository;
+        this.integrationService = integrationService;
     }
 
     @Transactional
@@ -56,5 +62,11 @@ public class InsuranceServiceImpl implements InsuranceService {
     @Override
     public List<String> getAllContractTypes() {
         return repository.getAllContractTypes();
+    }
+
+    @Transactional
+    @Override
+    public void loadToExcel(List<ContractDto> contractDtoList) throws IOException {
+        integrationService.loadToExcel(contractDtoList);
     }
 }

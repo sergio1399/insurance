@@ -16,6 +16,7 @@ import sergio.ru.insurancetest.service.InsuranceService;
 import sergio.ru.insurancetest.utils.ContractConverter;
 import sergio.ru.insurancetest.validator.ContractFormValidator;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.LinkedHashMap;
@@ -124,9 +125,13 @@ public class InsuranceController {
     }
 
     @RequestMapping(value = "/contracts/excel", method = RequestMethod.POST)
-    public String loadToExcel(final RedirectAttributes redirectAttributes) {
+    public String loadToExcel(final RedirectAttributes redirectAttributes) throws IOException {
         LOGGER.info("loadToExcel()");
-        service.loadToExcel();
+        List<Contract> contracts = service.findAll();
+        List<ContractDto> dtos = contracts.stream()
+                .map(contract -> ContractConverter.convertToDto(contract, modelMapper))
+                .collect(Collectors.toList());
+        service.loadToExcel(dtos);
         redirectAttributes.addFlashAttribute("css", "success");
         redirectAttributes.addFlashAttribute("msg", "Contracts loaded to excel!");
 
