@@ -22,7 +22,7 @@
 			<button class="btn btn-dark"
 					onclick="location.href='${urlAddContract}'">Add Contract</button>
 			<button class="btn btn-success"
-					onclick="$.post('${excelUrl}')">Load to Excel</button>
+					onclick="location.href='${excelUrl}'">Load to Excel</button>
 		</div>
 	</div>
 </nav>

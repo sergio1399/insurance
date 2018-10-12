@@ -124,7 +124,7 @@ public class InsuranceController {
         return "redirect:/contracts";
     }
 
-    @RequestMapping(value = "/contracts/excel", method = RequestMethod.POST)
+    @RequestMapping(value = "/contracts/excel", method = RequestMethod.GET)
     public String loadToExcel(final RedirectAttributes redirectAttributes) throws IOException {
         LOGGER.info("loadToExcel()");
         List<Contract> contracts = service.findAll();
