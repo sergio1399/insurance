@@ -7,9 +7,12 @@
 </div>
 
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
-<script src="/webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-<script src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
+<spring:url value="/resources/static/hello.js" var="coreJs" />
+<spring:url value="/resources/static/bootstrap.min.js"
+			var="bootstrapJs" />
 
+<script src="${coreJs}"></script>
+<script src="${bootstrapJs}"></script>
 

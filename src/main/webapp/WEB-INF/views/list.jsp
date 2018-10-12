@@ -24,7 +24,7 @@
 
     <h1>All Contracts</h1>
 
-    <table class="table table-striped">
+    <table id="listTable" class="table table-striped">
         <thead>
         <tr>
             <th>Серия-номер</th>
@@ -72,6 +72,8 @@
 </div>
 
 <jsp:include page="../fragments/footer.jsp" />
+
+
 
 </body>
 </html>

@@ -4,6 +4,7 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import sergio.ru.insurancetest.dto.ContractDto;
 import sergio.ru.insurancetest.model.Contract;
@@ -19,10 +20,11 @@ public class IntegrationServiceImpl implements IntegrationService {
 
     private static final Logger logger = LoggerFactory.getLogger(InsuranceServiceImpl.class);
 
-    private static final String FILE_NAME = "contracts.xlsx";
-
     private static String[] columns = {"Серия/Номер", "Тип договора", "Дата подписания", "Начало действия", "Конец действия",
                                         "Сумма без НДС, руб", "Ставка НДС, %", "Сумма НДС, руб", "Сумма с НДС, руб", "Соответствие мин. сумме", "Номер ТС"};
+
+    @Value("${excel.file-name}")
+    private String fileName;
 
     @Override
     public void loadToExcel(List<ContractDto> contractList) throws IOException {
@@ -96,7 +98,7 @@ public class IntegrationServiceImpl implements IntegrationService {
         }
 
         // Write the output to a file
-        FileOutputStream fileOut = new FileOutputStream(FILE_NAME);
+        FileOutputStream fileOut = new FileOutputStream(fileName);
         workbook.write(fileOut);
         fileOut.close();
 
