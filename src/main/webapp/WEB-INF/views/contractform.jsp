@@ -58,7 +58,6 @@
                 <label class="col-sm-2 control-label">Type</label>
                 <div class="col-sm-10">
                     <form:select path="type" class="form-control">
-                        <form:option value="NONE" label="--- Select ---" />
                         <form:options items="${typeList}" />
                     </form:select>
                     <form:errors path="type" class="type" />

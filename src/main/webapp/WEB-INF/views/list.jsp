@@ -40,20 +40,41 @@
             <th>Номер ТС</th>
             <th>Действия</th>
         </tr>
+        <tr>
+            <td><input type="text" class="input-filter" name="filterSN" value="" id="filterSN" /></td>
+            <td>
+                <select class="input-filter" id="filterType">
+                    <option>ALL</option>
+                    <c:forEach var="contractType" items="${typeList.keySet()}">
+                        <option>${contractType}</option>
+                    </c:forEach>
+                </select>
+            </td>
+            <td><input type="text" class="input-filter" name="filterSign" value="" id="filterSign" /></td>
+            <td><input type="text" class="input-filter" name="filterOpen" value="" id="filterOpen" /></td>
+            <td><input type="text" class="input-filter" name="filterExp" value="" id="filterExp" /></td>
+            <td><input type="text" class="input-filter" name="filterSumNoNds" value="" id="filterSumNoNds" /></td>
+            <td><input type="text" class="input-filter" name="filterRste" value="" id="filterRate" /></td>
+            <td><input type="text" class="input-filter" name="filterSumNds" value="" id="filterSumNds" /></td>
+            <td><input type="text" class="input-filter" name="filterSumWithNds" value="" id="filterSumWithNds" /></td>
+            <td><input type="text" class="input-filter" name="filterAccord" value="" id="filterAccord" /></td>
+            <td><input type="text" class="input-filter" name="filterTS" value="" id="filterTS" /></td>
+        </tr>
         </thead>
+        <tbody>
         <c:forEach var="contract" items="${contracts}">
             <tr>
-                <td>${contract.serie}-${contract.number}</td>
-                <td>${contract.type}</td>
-                <td>${contract.signDate}</td>
-                <td>${contract.openDate}</td>
-                <td>${contract.expirationDate}</td>
-                <td>${contract.sumNoNds}</td>
-                <td>${contract.ndsRate}</td>
-                <td>${contract.ndsSum}</td>
-                <td>${contract.sumWithNds}</td>
-                <td>${contract.minSumAccord}</td>
-                <td>${contract.vehicleNumber}</td>
+                <td id="seriaNumber">${contract.serie}-${contract.number}</td>
+                <td id="contractType">${contract.type}</td>
+                <td id="signDate">${contract.signDate}</td>
+                <td id="openDate">${contract.openDate}</td>
+                <td id="expDate">${contract.expirationDate}</td>
+                <td id="sumNoNds">${contract.sumNoNds}</td>
+                <td id="ndsRate">${contract.ndsRate}</td>
+                <td id="ndsSum">${contract.ndsSum}</td>
+                <td id="sumWithNds">${contract.sumWithNds}</td>
+                <td id="accord">${contract.minSumAccord}</td>
+                <td id="vehicle">${contract.vehicleNumber}</td>
                 <td>
                     <spring:url value="/contracts/${contract.id}" var="contractUrl" />
                     <spring:url value="/contracts/${contract.id}/remove" var="removeUrl" />
@@ -69,12 +90,18 @@
                 </td>
             </tr>
         </c:forEach>
+        </tbody>
     </table>
 
 </div>
 
 <jsp:include page="../fragments/footer.jsp" />
 
+<script>
+    $(document).ready(function() {
+        zebraRows('tbody tr:odd td', 'odd');
+    });
+</script>
 
 
 </body>

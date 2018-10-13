@@ -57,6 +57,7 @@ public class InsuranceController {
     @RequestMapping(value = "/contracts", method = RequestMethod.GET)
     public String showAllContracts(Model model) {
         LOGGER.info("showAllContracts()");
+        initModel(model);
         List<Contract> contracts = service.findAll();
         List<ContractDto> dtos = contracts.stream()
                 .map(contract -> ContractConverter.convertToDto(contract, modelMapper))
