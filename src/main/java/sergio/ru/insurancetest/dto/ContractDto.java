@@ -2,6 +2,8 @@ package sergio.ru.insurancetest.dto;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 
 public class ContractDto {
@@ -14,18 +16,18 @@ public class ContractDto {
 
     private String type;
 
-    @DateTimeFormat(pattern = "MM/dd/yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate signDate;
 
-    @DateTimeFormat(pattern = "MM/dd/yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate openDate;
 
-    @DateTimeFormat(pattern = "MM/dd/yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate expirationDate;
 
     private Double sumNoNds;
 
-    private Double ndsRate;
+    private Integer ndsRate;
 
     private Double ndsSum;
 
@@ -33,7 +35,11 @@ public class ContractDto {
 
     private Boolean minSumAccord;
 
+    private String accord;
+
     private String vehicleNumber;
+
+    private String note;
 
     public ContractDto() {
     }
@@ -95,23 +101,23 @@ public class ContractDto {
     }
 
     public Double getSumNoNds() {
-        return sumNoNds;
+        return round(sumNoNds, 2);
     }
 
     public void setSumNoNds() {
         this.sumNoNds = sumWithNds - ndsSum;
     }
 
-    public Double getNdsRate() {
+    public Integer getNdsRate() {
         return ndsRate;
     }
 
     public void setNdsRate() {
-        this.ndsRate = (ndsSum / sumWithNds) * 100;
+        this.ndsRate = (int)((ndsSum / sumWithNds) * 100);
     }
 
     public Double getNdsSum() {
-        return ndsSum;
+        return round(ndsSum, 2);
     }
 
     public void setNdsSum(Double ndsSum) {
@@ -119,7 +125,7 @@ public class ContractDto {
     }
 
     public Double getSumWithNds() {
-        return sumWithNds;
+        return round(sumWithNds,2);
     }
 
     public void setSumWithNds(Double sumWithNds) {
@@ -133,9 +139,15 @@ public class ContractDto {
     public void setMinSumAccord() {
         if (sumWithNds > 1000) {
             this.minSumAccord = true;
+            accord = "Да";
         } else {
             this.minSumAccord = false;
+            accord = "Нет";
         }
+    }
+
+    public String getAccord() {
+        return accord;
     }
 
     public String getVehicleNumber() {
@@ -144,6 +156,14 @@ public class ContractDto {
 
     public void setVehicleNumber(String vehicleNumber) {
         this.vehicleNumber = vehicleNumber;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
     @Override
@@ -167,5 +187,13 @@ public class ContractDto {
 
     public boolean isNew() {
         return (this.id == null);
+    }
+
+    private double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = new BigDecimal(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 }

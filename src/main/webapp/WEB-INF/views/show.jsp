@@ -21,46 +21,46 @@
         </div>
     </c:if>
 
-    <h1>Contract Detail</h1>
+    <h1>Детали договора</h1>
     <br />
 
     <div class="row">
-        <label class="col-sm-2">Serie-Number</label>
+        <label class="col-sm-2">Серия/Номер</label>
         <div class="col-sm-10">${contract.serie}-${contract.number}</div>
     </div>
 
     <div class="row">
-        <label class="col-sm-2">Type</label>
+        <label class="col-sm-2">Тип договора</label>
         <div class="col-sm-10">${contract.type}</div>
     </div>
 
     <div class="row">
-        <label class="col-sm-2">Signed</label>
+        <label class="col-sm-2">Дата подписания</label>
         <div class="col-sm-10">${contract.signDate}</div>
     </div>
 
     <div class="row">
-        <label class="col-sm-2">From</label>
+        <label class="col-sm-2">Действует от</label>
         <div class="col-sm-10">${contract.openDate}</div>
     </div>
 
     <div class="row">
-        <label class="col-sm-2">To</label>
+        <label class="col-sm-2">Действует до</label>
         <div class="col-sm-10">${contract.expirationDate}</div>
     </div>
 
     <div class="row">
-        <label class="col-sm-2">NDS sum</label>
+        <label class="col-sm-2">Сумма НДС</label>
         <div class="col-sm-10">${contract.ndsSum}</div>
     </div>
 
     <div class="row">
-        <label class="col-sm-2">Sum with NDS</label>
+        <label class="col-sm-2">Сумма с НДС</label>
         <div class="col-sm-10">${contract.sumWithNds}</div>
     </div>
 
     <div class="row">
-        <label class="col-sm-2">Vehicle Number</label>
+        <label class="col-sm-2">Номер ТС</label>
         <div class="col-sm-10">${contract.vehicleNumber}</div>
     </div>
 

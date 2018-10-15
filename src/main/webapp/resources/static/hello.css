@@ -3,20 +3,31 @@
 }
 .input-filter{
   width: 80px;
-  background-color: #ebccd1;
+  background-color: gainsboro;
 }
-table {
-  background-color: white;
-  width: 100%;
+/*table {*/
+  /*background-color: white;*/
+  /*width: 100%;*/
+/*}*/
+/*tbody td {*/
+  /*background-color: white;*/
+/*}*/
+/*tbody td.odd {*/
+  /*background-color: #666;*/
+  /*color: white;*/
+/*}*/
+/*td.hovered {*/
+  /*background-color: lightblue;*/
+  /*color: #666;*/
+/*}*/
+.btn-action{
+  margin: 2px;
+  width: 100px;
+  padding: 5px;
 }
-tbody td {
-  background-color: white;
+.th-common{
+    text-align: center;
 }
-tbody td.odd {
-  background-color: #666;
-  color: white;
-}
-td.hovered {
-  background-color: lightblue;
-  color: #666;
+.td-common{
+    text-align: center;
 }

@@ -69,7 +69,7 @@
             <div class="form-group ${status.error ? 'has-error' : ''}">
                 <label class="col-sm-2 control-label">Signed</label>
                 <div class="col-sm-10">
-                    <form:input path="signDate" class="form-control"
+                    <form:input path="signDate" class="form-control" type="date"
                                 id="signDate" placeholder="signDate" />
                     <form:errors path="signDate" class="control-label" />
                 </div>
@@ -80,7 +80,7 @@
             <div class="form-group ${status.error ? 'has-error' : ''}">
                 <label class="col-sm-2 control-label">Open Date</label>
                 <div class="col-sm-10">
-                    <form:input path="openDate" class="form-control"
+                    <form:input path="openDate" class="form-control" type="date"
                                    id="openDate" placeholder="openDate" />
                     <form:errors path="openDate" class="control-label" />
                 </div>
@@ -91,7 +91,7 @@
             <div class="form-group ${status.error ? 'has-error' : ''}">
                 <label class="col-sm-2 control-label">End Date</label>
                 <div class="col-sm-10">
-                    <form:input path="expirationDate" class="form-control"
+                    <form:input path="expirationDate" class="form-control" type="date"
                                 id="expirationDate" placeholder="expirationDate" />
                     <form:errors path="expirationDate" class="control-label" />
                 </div>
@@ -102,7 +102,7 @@
             <div class="form-group ${status.error ? 'has-error' : ''}">
                 <label class="col-sm-2 control-label">NDS Sum</label>
                 <div class="col-sm-10">
-                    <form:input path="ndsSum" type="number" class="form-control"
+                    <form:input path="ndsSum" type="number" step="0.01" class="form-control"
                                 id="ndsSum" placeholder="ndsSum" />
                     <form:errors path="ndsSum" class="control-label" />
                 </div>
@@ -113,7 +113,7 @@
             <div class="form-group ${status.error ? 'has-error' : ''}">
                 <label class="col-sm-2 control-label">Sum with NDS</label>
                 <div class="col-sm-10">
-                    <form:input path="sumWithNds" type="number" class="form-control"
+                    <form:input path="sumWithNds" type="number" step="0.01" class="form-control"
                                 id="sumWithNds" placeholder="sumWithNds" />
                     <form:errors path="sumWithNds" class="control-label" />
                 </div>
@@ -127,6 +127,17 @@
                     <form:input path="vehicleNumber" type="text" class="form-control"
                                 id="vehicleNumber" placeholder="vehicleNumber" />
                     <form:errors path="vehicleNumber" class="control-label" />
+                </div>
+            </div>
+        </spring:bind>
+
+        <spring:bind path="note">
+            <div class="form-group ${status.error ? 'has-error' : ''}">
+                <label class="col-sm-2 control-label">Note</label>
+                <div class="col-sm-10">
+                    <form:textarea path="note" class="form-control"
+                                id="note" placeholder="note" />
+                    <form:errors path="note" class="control-label" />
                 </div>
             </div>
         </spring:bind>
@@ -150,6 +161,7 @@
 </div>
 
 <jsp:include page="../fragments/footer.jsp" />
+<script src="/resources/static/updateform.js}"></script>
 
 </body>
 </html>

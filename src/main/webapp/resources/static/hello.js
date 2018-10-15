@@ -26,12 +26,12 @@ function zebraRows(selector, className)
     $(selector).removeClass(className).addClass(className);
 }
 
-$('tbody tr').hover(function(){
+/*$('tbody tr').hover(function(){
     $(this).find('td').addClass('hovered');
 }, function(){
     $(this).find('td').removeClass('hovered');
 });
-
+*/
 //filter results based on query
 function filter(selector, query, tdId) {
     query =   $.trim(query); //trim white space
@@ -70,8 +70,8 @@ $('#filterSN').keyup(function(event) {
     }
 
     //reapply zebra rows
-    $('.visible td').removeClass('odd');
-    zebraRows('.visible:odd td', 'odd');
+    //$('.visible td').removeClass('odd');
+    //zebraRows('.visible:odd td', 'odd');
 });
 
 $('#filterType').change(function() {

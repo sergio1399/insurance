@@ -22,71 +22,80 @@
         </div>
     </c:if>
 
-    <h1>All Contracts</h1>
+    <h1>Список договоров</h1>
 
-    <table id="listTable" class="table table-striped">
+    <table id="listTable" class="table table-striped table-hover">
         <thead>
         <tr>
-            <th>Серия-номер</th>
-            <th>Тип договора</th>
-            <th>Дата подписания</th>
-            <th>Начало действия</th>
-            <th>Конец действия</th>
-            <th>Сумма без НДС, руб</th>
-            <th>Ставка НДС, %</th>
-            <th>Сумма НДС, руб</th>
-            <th>Сумма с НДС, руб</th>
-            <th>Соответствие мин сумме</th>
-            <th>Номер ТС</th>
-            <th>Действия</th>
+            <th class="th-common">Серия-номер</th>
+            <th class="th-common">Тип договора</th>
+            <th class="th-common">Дата подписания</th>
+            <th class="th-common">Начало действия</th>
+            <th class="th-common">Конец действия</th>
+            <th class="th-common">Сумма без НДС, руб</th>
+            <th class="th-common">Ставка НДС, %</th>
+            <th class="th-common">Сумма НДС, руб</th>
+            <th class="th-common">Сумма с НДС, руб</th>
+            <th class="th-common">Соответствие мин сумме</th>
+            <th class="th-common">Номер ТС</th>
+            <th class="th-common" colspan="3">Действия</th>
         </tr>
         <tr>
-            <td><input type="text" class="input-filter" name="filterSN" value="" id="filterSN" /></td>
+            <td><input type="text" class="form-control" name="filterSN" value="" id="filterSN" /></td>
             <td>
-                <select class="input-filter" id="filterType">
-                    <option>ALL</option>
+                <select class="form-control" id="filterType">
+                    <option>ВСЕ</option>
                     <c:forEach var="contractType" items="${typeList.keySet()}">
                         <option>${contractType}</option>
                     </c:forEach>
                 </select>
             </td>
-            <td><input type="text" class="input-filter" name="filterSign" value="" id="filterSign" /></td>
-            <td><input type="text" class="input-filter" name="filterOpen" value="" id="filterOpen" /></td>
-            <td><input type="text" class="input-filter" name="filterExp" value="" id="filterExp" /></td>
-            <td><input type="text" class="input-filter" name="filterSumNoNds" value="" id="filterSumNoNds" /></td>
-            <td><input type="text" class="input-filter" name="filterRste" value="" id="filterRate" /></td>
-            <td><input type="text" class="input-filter" name="filterSumNds" value="" id="filterSumNds" /></td>
-            <td><input type="text" class="input-filter" name="filterSumWithNds" value="" id="filterSumWithNds" /></td>
-            <td><input type="text" class="input-filter" name="filterAccord" value="" id="filterAccord" /></td>
-            <td><input type="text" class="input-filter" name="filterTS" value="" id="filterTS" /></td>
+            <td><input type="text" class="form-control" name="filterSign" value="" id="filterSign" /></td>
+            <td><input type="text" class="form-control" name="filterOpen" value="" id="filterOpen" /></td>
+            <td><input type="text" class="form-control" name="filterExp" value="" id="filterExp" /></td>
+            <td><input type="text" class="form-control" name="filterSumNoNds" value="" id="filterSumNoNds" /></td>
+            <td><input type="text" class="form-control" name="filterRste" value="" id="filterRate" /></td>
+            <td><input type="text" class="form-control" name="filterSumNds" value="" id="filterSumNds" /></td>
+            <td><input type="text" class="form-control" name="filterSumWithNds" value="" id="filterSumWithNds" /></td>
+            <td><input type="text" class="form-control" name="filterAccord" value="" id="filterAccord" /></td>
+            <td><input type="text" class="form-control" name="filterTS" value="" id="filterTS" /></td>
+            <td colspan="3"></td>
         </tr>
         </thead>
         <tbody>
         <c:forEach var="contract" items="${contracts}">
             <tr>
-                <td id="seriaNumber">${contract.serie}-${contract.number}</td>
-                <td id="contractType">${contract.type}</td>
-                <td id="signDate">${contract.signDate}</td>
-                <td id="openDate">${contract.openDate}</td>
-                <td id="expDate">${contract.expirationDate}</td>
-                <td id="sumNoNds">${contract.sumNoNds}</td>
-                <td id="ndsRate">${contract.ndsRate}</td>
-                <td id="ndsSum">${contract.ndsSum}</td>
-                <td id="sumWithNds">${contract.sumWithNds}</td>
-                <td id="accord">${contract.minSumAccord}</td>
-                <td id="vehicle">${contract.vehicleNumber}</td>
-                <td>
+                <td class="td-common" id="seriaNumber">${contract.serie}-${contract.number}</td>
+                <td class="td-common" id="contractType">${contract.type}</td>
+                <td class="td-common" id="signDate">${contract.signDate}</td>
+                <td class="td-common" id="openDate">${contract.openDate}</td>
+                <td class="td-common" id="expDate">${contract.expirationDate}</td>
+                <td class="td-common" id="sumNoNds">${contract.sumNoNds}</td>
+                <td class="td-common" id="ndsRate">${contract.ndsRate}</td>
+                <td class="td-common" id="ndsSum">${contract.ndsSum}</td>
+                <td class="td-common" id="sumWithNds">${contract.sumWithNds}</td>
+                <td class="td-common" id="accord">${contract.accord}</td>
+                <td class="td-common" id="vehicle">${contract.vehicleNumber}</td>
+                <td class="td-common">
                     <spring:url value="/contracts/${contract.id}" var="contractUrl" />
-                    <spring:url value="/contracts/${contract.id}/remove" var="removeUrl" />
+                    <button class="btn btn-default"
+                            onclick="location.href='${contractUrl}'">
+                        <img src="/resources/pics/view.png" />
+                    </button>
+                </td>
+                <td class="td-common">
                     <spring:url value="/contracts/${contract.id}/update" var="updateUrl" />
-                    <button class="btn btn-info"
-                            onclick="location.href='${contractUrl}'">Просмотреть</button>
-                    <button class="btn btn-primary"
-                            onclick="location.href='${updateUrl}'">Изменить</button>
-                    <button class="btn btn-danger"
-                            onclick="this.disabled=true;$.post('${removeUrl}', function() {
-                                    location.reload(true);
-                                    })">Удалить</button>
+                    <button class="btn btn-default"
+                            onclick="location.href='${updateUrl}'">
+                        <img src="/resources/pics/update.png">
+                    </button>
+                </td>
+                <td class="td-common">
+                    <spring:url value="/contracts/${contract.id}/remove" var="removeUrl" />
+                    <button class="btn btn-default"
+                            onclick="this.disabled=true;post('${removeUrl}')">
+                        <img src="/resources/pics/remove.png">
+                    </button>
                 </td>
             </tr>
         </c:forEach>
@@ -99,7 +108,7 @@
 
 <script>
     $(document).ready(function() {
-        zebraRows('tbody tr:odd td', 'odd');
+        //zebraRows('tbody tr:odd td', 'odd');
     });
 </script>
 

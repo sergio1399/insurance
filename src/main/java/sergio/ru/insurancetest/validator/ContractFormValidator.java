@@ -48,15 +48,15 @@ public class ContractFormValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "sumWithNds", "NotEmpty.contractForm.sumWithNds");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "vehicleNumber", "NotEmpty.contractForm.vehicleNumber");
 
-        if (contract.getSignDate().isBefore(LocalDate.now())) {
+        if (contract.getSignDate() != null && contract.getSignDate().isBefore(LocalDate.now())) {
             errors.rejectValue("signDate", "TooEarly.contractForm.signDate");
         }
 
-        if (contract.getOpenDate().isBefore(contract.getSignDate().plusDays(OFFSET_DAYS))) {
+        if (contract.getSignDate() != null && contract.getOpenDate() != null && contract.getOpenDate().isBefore(contract.getSignDate().plusDays(OFFSET_DAYS))) {
             errors.rejectValue("openDate", "TooEarly.contractForm.openDate");
         }
 
-        if (contract.getExpirationDate() != null) {
+        if (contract.getExpirationDate() != null && contract.getOpenDate() != null) {
             if (contract.getExpirationDate().isBefore(contract.getOpenDate().plusDays(1))) {
                 errors.rejectValue("expirationDate", "TooEarly.contractForm.expirationDate");
             }
