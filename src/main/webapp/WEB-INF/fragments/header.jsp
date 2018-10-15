@@ -20,9 +20,9 @@
 		</div>
 		<div id="navbar">
 			<button class="btn btn-dark"
-					onclick="location.href='${urlAddContract}'">Создать договор</button>
+					onclick="location.href='${urlAddContract}'">Add contract</button>
 			<button class="btn btn-success"
-					onclick="location.href='${excelUrl}'">Выгрузить в Excel</button>
+					onclick="location.href='${excelUrl}'">Load to Excel</button>
 		</div>
 	</div>
 </nav>

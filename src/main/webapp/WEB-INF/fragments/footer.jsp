@@ -10,9 +10,11 @@
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
 <spring:url value="/resources/static/hello.js" var="coreJs" />
+<spring:url value="/resources/static/updateform.js" var="updateJs" />
 <spring:url value="/resources/static/bootstrap.min.js"
 			var="bootstrapJs" />
 
 <script src="${coreJs}"></script>
+<script src="${updateJs}"></script>
 <script src="${bootstrapJs}"></script>
 

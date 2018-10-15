@@ -64,6 +64,11 @@
         <div class="col-sm-10">${contract.vehicleNumber}</div>
     </div>
 
+    <div class="row">
+        <label class="col-sm-2">Примечание</label>
+        <div class="col-sm-10">${contract.note}</div>
+    </div>
+
 </div>
 
 <jsp:include page="../fragments/footer.jsp" />

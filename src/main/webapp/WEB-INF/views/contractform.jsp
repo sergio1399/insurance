@@ -13,10 +13,10 @@
 
     <c:choose>
         <c:when test="${contractForm['new']}">
-            <h1>Add Contract</h1>
+            <h1>Создать договор</h1>
         </c:when>
         <c:otherwise>
-            <h1>Update Contract</h1>
+            <h1>Изменить договор</h1>
         </c:otherwise>
     </c:choose>
     <br />
@@ -33,7 +33,7 @@
 
         <spring:bind path="serie">
             <div class="form-group ${status.error ? 'has-error' : ''}">
-                <label class="col-sm-2 control-label">Serie</label>
+                <label class="col-sm-2 control-label">Серия</label>
                 <div class="col-sm-10">
                     <form:input path="serie" type="text" class="form-control"
                                 id="serie" placeholder="serie" />
@@ -44,7 +44,7 @@
 
         <spring:bind path="number">
             <div class="form-group ${status.error ? 'has-error' : ''}">
-                <label class="col-sm-2 control-label">Number</label>
+                <label class="col-sm-2 control-label">Номер</label>
                 <div class="col-sm-10">
                     <form:input path="number" type="text" class="form-control"
                                 id="number" placeholder="number" />
@@ -55,7 +55,7 @@
 
         <spring:bind path="type">
             <div class="form-group ${status.error ? 'has-error' : ''}">
-                <label class="col-sm-2 control-label">Type</label>
+                <label class="col-sm-2 control-label">Тип</label>
                 <div class="col-sm-10">
                     <form:select path="type" class="form-control">
                         <form:options items="${typeList}" />
@@ -67,7 +67,7 @@
 
         <spring:bind path="signDate">
             <div class="form-group ${status.error ? 'has-error' : ''}">
-                <label class="col-sm-2 control-label">Signed</label>
+                <label class="col-sm-2 control-label">Дата подписания</label>
                 <div class="col-sm-10">
                     <form:input path="signDate" class="form-control" type="date"
                                 id="signDate" placeholder="signDate" />
@@ -78,7 +78,7 @@
 
         <spring:bind path="openDate">
             <div class="form-group ${status.error ? 'has-error' : ''}">
-                <label class="col-sm-2 control-label">Open Date</label>
+                <label class="col-sm-2 control-label">Действует от</label>
                 <div class="col-sm-10">
                     <form:input path="openDate" class="form-control" type="date"
                                    id="openDate" placeholder="openDate" />
@@ -89,7 +89,7 @@
 
         <spring:bind path="expirationDate">
             <div class="form-group ${status.error ? 'has-error' : ''}">
-                <label class="col-sm-2 control-label">End Date</label>
+                <label class="col-sm-2 control-label">Действует до</label>
                 <div class="col-sm-10">
                     <form:input path="expirationDate" class="form-control" type="date"
                                 id="expirationDate" placeholder="expirationDate" />
@@ -98,9 +98,31 @@
             </div>
         </spring:bind>
 
+        <spring:bind path="sumNoNds">
+            <div class="form-group ${status.error ? 'has-error' : ''}">
+                <label class="col-sm-2 control-label">Сумма без НДС</label>
+                <div class="col-sm-10">
+                    <form:input path="sumNoNds" type="number" step="0.01" class="form-control"
+                                id="sumNoNds" placeholder="сумма без НДС" />
+                    <form:errors path="sumNoNds" class="control-label" />
+                </div>
+            </div>
+        </spring:bind>
+
+        <spring:bind path="ndsRate">
+            <div class="form-group ${status.error ? 'has-error' : ''}">
+                <label class="col-sm-2 control-label">Ставка НДС</label>
+                <div class="col-sm-10">
+                    <form:input path="ndsRate" type="number" class="form-control"
+                                id="ndsRate" placeholder="ndsRate" />
+                    <form:errors path="ndsRate" class="control-label" />
+                </div>
+            </div>
+        </spring:bind>
+
         <spring:bind path="ndsSum">
             <div class="form-group ${status.error ? 'has-error' : ''}">
-                <label class="col-sm-2 control-label">NDS Sum</label>
+                <label class="col-sm-2 control-label">Сумма НДС</label>
                 <div class="col-sm-10">
                     <form:input path="ndsSum" type="number" step="0.01" class="form-control"
                                 id="ndsSum" placeholder="ndsSum" />
@@ -111,7 +133,7 @@
 
         <spring:bind path="sumWithNds">
             <div class="form-group ${status.error ? 'has-error' : ''}">
-                <label class="col-sm-2 control-label">Sum with NDS</label>
+                <label class="col-sm-2 control-label">Сумма с НДС</label>
                 <div class="col-sm-10">
                     <form:input path="sumWithNds" type="number" step="0.01" class="form-control"
                                 id="sumWithNds" placeholder="sumWithNds" />
@@ -122,7 +144,7 @@
 
         <spring:bind path="vehicleNumber">
             <div class="form-group ${status.error ? 'has-error' : ''}">
-                <label class="col-sm-2 control-label">Vehicle Number</label>
+                <label class="col-sm-2 control-label">Номер ТС</label>
                 <div class="col-sm-10">
                     <form:input path="vehicleNumber" type="text" class="form-control"
                                 id="vehicleNumber" placeholder="vehicleNumber" />
@@ -133,7 +155,7 @@
 
         <spring:bind path="note">
             <div class="form-group ${status.error ? 'has-error' : ''}">
-                <label class="col-sm-2 control-label">Note</label>
+                <label class="col-sm-2 control-label">Примечание</label>
                 <div class="col-sm-10">
                     <form:textarea path="note" class="form-control"
                                 id="note" placeholder="note" />
@@ -146,11 +168,11 @@
             <div class="col-sm-offset-2 col-sm-10">
                 <c:choose>
                     <c:when test="${contractForm['new']}">
-                        <button type="submit" class="btn-lg btn-primary pull-right">Add
+                        <button type="submit" class="btn-lg btn-primary pull-right">Создать
                         </button>
                     </c:when>
                     <c:otherwise>
-                        <button type="submit" class="btn-lg btn-primary pull-right">Update
+                        <button type="submit" class="btn-lg btn-primary pull-right">Обновить
                         </button>
                     </c:otherwise>
                 </c:choose>
@@ -161,7 +183,6 @@
 </div>
 
 <jsp:include page="../fragments/footer.jsp" />
-<script src="/resources/static/updateform.js}"></script>
 
 </body>
 </html>

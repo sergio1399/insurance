@@ -24,12 +24,6 @@ public class ContractFormValidator implements Validator {
 
     private static Integer OFFSET_DAYS = 3;
 
-    private InsuranceService service;
-
-    public ContractFormValidator(InsuranceService service) {
-        this.service = service;
-    }
-
     @Override
     public boolean supports(Class<?> aClass) {
         return ContractDto.class.equals(aClass);
