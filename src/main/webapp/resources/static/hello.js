@@ -75,7 +75,6 @@ $('#filterSN').keyup(function(event) {
 });
 
 $('#filterType').change(function() {
-	alert($(this).val());
     if ($(this).val() == 'ALL') {
         $('tbody tr').removeClass('visible').show().addClass('visible');
 	}
@@ -102,6 +101,174 @@ $('#filterSign').keyup(function(event) {
     //if there is text, lets filter
     else {
         strictFilter('tbody tr', $(this).val(), '#signDate');
+    }
+
+    //reapply zebra rows
+    $('.visible td').removeClass('odd');
+    zebraRows('.visible:odd td', 'odd');
+});
+
+$('#filterOpen').keyup(function(event) {
+    //if esc is pressed or nothing is entered
+    if (event.keyCode == 27 || $(this).val() == '') {
+        //if esc is pressed we want to clear the value of search box
+        $(this).val('');
+
+        //we want each row to be visible because if nothing
+        //is entered then all rows are matched.
+        $('tbody tr').removeClass('visible').show().addClass('visible');
+    }
+
+    //if there is text, lets filter
+    else {
+        strictFilter('tbody tr', $(this).val(), '#openDate');
+    }
+
+    //reapply zebra rows
+    $('.visible td').removeClass('odd');
+    zebraRows('.visible:odd td', 'odd');
+});
+
+$('#filterExp').keyup(function(event) {
+    //if esc is pressed or nothing is entered
+    if (event.keyCode == 27 || $(this).val() == '') {
+        //if esc is pressed we want to clear the value of search box
+        $(this).val('');
+
+        //we want each row to be visible because if nothing
+        //is entered then all rows are matched.
+        $('tbody tr').removeClass('visible').show().addClass('visible');
+    }
+
+    //if there is text, lets filter
+    else {
+        strictFilter('tbody tr', $(this).val(), '#expDate');
+    }
+
+    //reapply zebra rows
+    $('.visible td').removeClass('odd');
+    zebraRows('.visible:odd td', 'odd');
+});
+
+$('#filterSumNoNds').keyup(function(event) {
+    //if esc is pressed or nothing is entered
+    if (event.keyCode == 27 || $(this).val() == '') {
+        //if esc is pressed we want to clear the value of search box
+        $(this).val('');
+
+        //we want each row to be visible because if nothing
+        //is entered then all rows are matched.
+        $('tbody tr').removeClass('visible').show().addClass('visible');
+    }
+
+    //if there is text, lets filter
+    else {
+        strictFilter('tbody tr', $(this).val(), '#sumNoNds');
+    }
+
+    //reapply zebra rows
+    $('.visible td').removeClass('odd');
+    zebraRows('.visible:odd td', 'odd');
+});
+
+$('#filterRate').keyup(function(event) {
+    //if esc is pressed or nothing is entered
+    if (event.keyCode == 27 || $(this).val() == '') {
+        //if esc is pressed we want to clear the value of search box
+        $(this).val('');
+
+        //we want each row to be visible because if nothing
+        //is entered then all rows are matched.
+        $('tbody tr').removeClass('visible').show().addClass('visible');
+    }
+
+    //if there is text, lets filter
+    else {
+        strictFilter('tbody tr', $(this).val(), '#ndsRate');
+    }
+
+    //reapply zebra rows
+    $('.visible td').removeClass('odd');
+    zebraRows('.visible:odd td', 'odd');
+});
+
+$('#filterSumNds').keyup(function(event) {
+    //if esc is pressed or nothing is entered
+    if (event.keyCode == 27 || $(this).val() == '') {
+        //if esc is pressed we want to clear the value of search box
+        $(this).val('');
+
+        //we want each row to be visible because if nothing
+        //is entered then all rows are matched.
+        $('tbody tr').removeClass('visible').show().addClass('visible');
+    }
+
+    //if there is text, lets filter
+    else {
+        strictFilter('tbody tr', $(this).val(), '#ndsSum');
+    }
+
+    //reapply zebra rows
+    $('.visible td').removeClass('odd');
+    zebraRows('.visible:odd td', 'odd');
+});
+
+$('#filterSumWithNds').keyup(function(event) {
+    //if esc is pressed or nothing is entered
+    if (event.keyCode == 27 || $(this).val() == '') {
+        //if esc is pressed we want to clear the value of search box
+        $(this).val('');
+
+        //we want each row to be visible because if nothing
+        //is entered then all rows are matched.
+        $('tbody tr').removeClass('visible').show().addClass('visible');
+    }
+
+    //if there is text, lets filter
+    else {
+        strictFilter('tbody tr', $(this).val(), '#sumWithNds');
+    }
+
+    //reapply zebra rows
+    $('.visible td').removeClass('odd');
+    zebraRows('.visible:odd td', 'odd');
+});
+
+$('#filterAccord').keyup(function(event) {
+    //if esc is pressed or nothing is entered
+    if (event.keyCode == 27 || $(this).val() == '') {
+        //if esc is pressed we want to clear the value of search box
+        $(this).val('');
+
+        //we want each row to be visible because if nothing
+        //is entered then all rows are matched.
+        $('tbody tr').removeClass('visible').show().addClass('visible');
+    }
+
+    //if there is text, lets filter
+    else {
+        strictFilter('tbody tr', $(this).val(), '#accord');
+    }
+
+    //reapply zebra rows
+    $('.visible td').removeClass('odd');
+    zebraRows('.visible:odd td', 'odd');
+});
+
+$('#filterTS').keyup(function(event) {
+    //if esc is pressed or nothing is entered
+    if (event.keyCode == 27 || $(this).val() == '') {
+        //if esc is pressed we want to clear the value of search box
+        $(this).val('');
+
+        //we want each row to be visible because if nothing
+        //is entered then all rows are matched.
+        $('tbody tr').removeClass('visible').show().addClass('visible');
+    }
+
+    //if there is text, lets filter
+    else {
+        filter('tbody tr', $(this).val(), '#vehicle');
     }
 
     //reapply zebra rows
