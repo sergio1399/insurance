@@ -1,17 +1,25 @@
 $('#ndsSum').keyup(function(event) {
-    $('#sumWithNds').val($(this).val() + $('#sumNoNds').val());
-    $('#ndsRate').val(Math.round(($(this).val()/$('#sumWithNds').val())*100));
+    if ($(this).val().trim().length > 0) {
+        $('#sumWithNds').val(parseFloat($(this).val()) + parseFloat($('#sumNoNds').val()));
+        $('#ndsRate').val(Math.round((parseFloat($(this).val()) / parseFloat($('#sumWithNds').val())) * 100));
+    }
 });
 
 $('#sumWithNds').keyup(function(event) {
-    $('#sumNoNds').val($(this).val() - $('#ndsSum').val());
+    if ($(this).val().trim().length > 0) {
+        $('#sumNoNds').val(parseFloat($(this).val()) - parseFloat($('#ndsSum').val()));
+    }
 });
 
 $('#sumNoNds').keyup(function(event) {
-    $('#sumWithNds').val($(this).val() + $('#ndsSum').val());
+    if ($(this).val().trim().length > 0) {
+        $('#sumWithNds').val(parseFloat($(this).val()) + parseFloat($('#ndsSum').val()));
+    }
 });
 
 $('#ndsRate').keyup(function(event) {
-    $('#ndsSum').val(($(this).val() * $('#sumWithNds').val()) / 100);
-    $('#sumWithNds').val($('#ndsSum').val() + $('#sumWithNds').val());
+    if ($(this).val().trim().length > 0) {
+        $('#ndsSum').val((parseFloat($(this).val()) * parseFloat($('#sumWithNds').val())) / 100);
+        $('#sumWithNds').val(parseFloat($('#ndsSum').val()) + parseFloat($('#sumWithNds').val()));
+    }
 });

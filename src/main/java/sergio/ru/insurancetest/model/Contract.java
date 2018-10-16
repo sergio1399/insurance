@@ -1,6 +1,7 @@
 package sergio.ru.insurancetest.model;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Contract {
 
@@ -136,5 +137,28 @@ public class Contract {
 
     public boolean isNew() {
         return (this.id == null);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Contract contract = (Contract) o;
+        return Objects.equals(id, contract.id) &&
+                Objects.equals(type, contract.type) &&
+                Objects.equals(serie, contract.serie) &&
+                Objects.equals(number, contract.number) &&
+                Objects.equals(signDate, contract.signDate) &&
+                Objects.equals(openDate, contract.openDate) &&
+                Objects.equals(expirationDate, contract.expirationDate) &&
+                Objects.equals(ndsSum, contract.ndsSum) &&
+                Objects.equals(sumWithNds, contract.sumWithNds) &&
+                Objects.equals(vehicleNumber, contract.vehicleNumber) &&
+                Objects.equals(note, contract.note);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, type, serie, number, signDate, openDate, expirationDate, ndsSum, sumWithNds, vehicleNumber, note);
     }
 }

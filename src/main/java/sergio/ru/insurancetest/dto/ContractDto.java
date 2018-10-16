@@ -101,7 +101,7 @@ public class ContractDto {
     }
 
     public Double getSumNoNds() {
-        return round(sumNoNds, 2);
+        return sumNoNds == null ? null : round(sumNoNds, 2);
     }
 
     public void setSumNoNds() {
@@ -117,7 +117,7 @@ public class ContractDto {
     }
 
     public Double getNdsSum() {
-        return round(ndsSum, 2);
+        return ndsSum == null ? null : round(ndsSum, 2);
     }
 
     public void setNdsSum(Double ndsSum) {
@@ -125,7 +125,7 @@ public class ContractDto {
     }
 
     public Double getSumWithNds() {
-        return round(sumWithNds,2);
+        return sumWithNds == null ? null : round(sumWithNds, 2);
     }
 
     public void setSumWithNds(Double sumWithNds) {

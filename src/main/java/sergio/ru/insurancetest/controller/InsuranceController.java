@@ -161,8 +161,4 @@ public class InsuranceController {
         model.addAttribute("typeList", types);
     }
 
-
-
-
-
 }
