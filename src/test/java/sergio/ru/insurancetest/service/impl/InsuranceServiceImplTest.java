@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import sergio.ru.insurancetest.dao.InsuranceRepository;
+import sergio.ru.insurancetest.exception.ServiceException;
 import sergio.ru.insurancetest.model.Contract;
 
 import java.util.Collections;
@@ -36,7 +37,7 @@ public class InsuranceServiceImplTest {
     private static String SERIA = "ячс";
 
     @Test
-    public void findByIdTest() {
+    public void findByIdTest() throws ServiceException {
         when(repository.findById(ID)).thenReturn(makeContract());
         Contract contract = service.findById(ID);
         Assert.assertEquals(makeContract(), contract);

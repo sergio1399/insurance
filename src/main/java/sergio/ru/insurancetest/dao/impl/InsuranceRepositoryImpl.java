@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import sergio.ru.insurancetest.controller.InsuranceController;
 import sergio.ru.insurancetest.dao.InsuranceRepository;
 import sergio.ru.insurancetest.dto.ContractDto;
+import sergio.ru.insurancetest.exception.ServiceException;
 import sergio.ru.insurancetest.model.Contract;
 import sergio.ru.insurancetest.model.ContractType;
 import sergio.ru.insurancetest.model.Vehicle;
@@ -47,62 +48,74 @@ public class InsuranceRepositoryImpl implements InsuranceRepository {
             + "contract_type_id=(SELECT ct.id FROM ContractType ct WHERE ct.name =:name), "
             + "vehicle_number=:vehicle_number, note=:note WHERE id=:id";
 
+    private static final String FIND_BY_ID_QUERY = "SELECT * FROM Contract " +
+            "INNER JOIN ContractType ON (Contract.contract_type_id = ContractType.id) " +
+            "WHERE Contract.id=:id";
+
+    private static final String VEHICLE_QUERY = "SELECT * FROM Vehicle WHERE number=:number";
+
     private static final String TYPES_QUERY = "SELECT id, name FROM ContractType";
 
-    NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private static final String CONTRACT_TYPE_QUERY = "SELECT * FROM ContractType WHERE id=:id";
+
+    private static final String ERROR_MESSAGE = "Ошибка данных";
+
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     public InsuranceRepositoryImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
     @Override
-    public Contract findById(Integer id) {
+    public Contract findById(Integer id) throws ServiceException {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("id", id);
-        String sql = "SELECT * FROM Contract " +
-                     "INNER JOIN ContractType ON (Contract.contract_type_id = ContractType.id) " +
-                     "WHERE Contract.id=:id";
+        String sql = FIND_BY_ID_QUERY;
 
         Contract result = null;
         try {
             result = namedParameterJdbcTemplate
                     .queryForObject(sql, params, new ContractMapper());
         } catch (EmptyResultDataAccessException e) {
-            // do nothing, return null
+            LOGGER.error("No contract found with id {}", id);
+            throw new ServiceException(ERROR_MESSAGE);
         }
 
         return result;
     }
 
     @Override
-    public ContractType findType(Integer id) {
+    public ContractType findType(Integer id) throws ServiceException {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("id", id);
-        String sql = "SELECT * FROM ContractType WHERE id=:id";
+        String sql = CONTRACT_TYPE_QUERY;
 
         ContractType result = null;
         try {
             result = namedParameterJdbcTemplate
                     .queryForObject(sql, params, new ContractTypeMapper());
         } catch (EmptyResultDataAccessException e) {
-            // do nothing, return null
+            LOGGER.error("No contract type found with id {}", id);
+            throw new ServiceException(ERROR_MESSAGE);
         }
 
         return result;
     }
 
     @Override
-    public Vehicle findVehicle(String number) {
+    public Vehicle findVehicle(String number) throws ServiceException {
+        LOGGER.info("Repository findVehicle() with number {}", number);
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("number", number);
-        String sql = "SELECT * FROM Vehicle WHERE number=:number";
+        String sql = VEHICLE_QUERY;
 
         Vehicle result = null;
         try {
             result = namedParameterJdbcTemplate
                     .queryForObject(sql, params, new VehicleMapper());
         } catch (EmptyResultDataAccessException e) {
-            // do nothing, return null
+            LOGGER.error("No vehicle found with number {}", number);
+            throw new ServiceException(ERROR_MESSAGE);
         }
 
         return result;
@@ -110,34 +123,47 @@ public class InsuranceRepositoryImpl implements InsuranceRepository {
 
     @Override
     public List<Contract> findAllContracts() {
+        LOGGER.info("Repository findAllContracts()");
         String sql = ALL_QUERY;
         List<Contract> result = namedParameterJdbcTemplate.query(sql, new ContractMapper());
         return result;
     }
 
     @Override
-    public void save(Contract contract) {
+    public void save(Contract contract) throws ServiceException {
         LOGGER.info("Repository save() contract:{}", contract);
         String sql = INSERT_QUERY;
         try {
             namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(contract));
         } catch (DataAccessException e) {
-            LOGGER.error("Error during saving date: {}", e.getMessage());
+            LOGGER.error("Error during saving data: {}", e.getMessage());
+            throw new ServiceException(ERROR_MESSAGE);
         }
 
     }
 
     @Override
-    public void update(Contract contract) {
+    public void update(Contract contract) throws ServiceException {
         String sql = UPDATE_QUERY;
+        try {
+            namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(contract));
+        } catch (DataAccessException e) {
+            LOGGER.error("Error during updating data: {}", e.getMessage());
+            throw new ServiceException(ERROR_MESSAGE);
+        }
 
-        namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(contract));
     }
 
     @Override
-    public void remove(Integer id) {
+    public void remove(Integer id) throws ServiceException {
         String sql = REMOVE_QUERY;
-        namedParameterJdbcTemplate.update(sql, new MapSqlParameterSource("id", id));
+        try {
+            namedParameterJdbcTemplate.update(sql, new MapSqlParameterSource("id", id));
+        } catch (DataAccessException e) {
+            LOGGER.error("Error during removing data: {}", e.getMessage());
+            throw new ServiceException(ERROR_MESSAGE);
+        }
+
     }
 
     @Override

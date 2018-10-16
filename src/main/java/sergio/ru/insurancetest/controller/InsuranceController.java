@@ -9,13 +9,16 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import sergio.ru.insurancetest.dto.ContractDto;
+import sergio.ru.insurancetest.exception.ServiceException;
 import sergio.ru.insurancetest.model.Contract;
 import sergio.ru.insurancetest.service.InsuranceService;
 import sergio.ru.insurancetest.utils.ContractConverter;
 import sergio.ru.insurancetest.validator.ContractFormValidator;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.text.ParseException;
 import java.time.LocalDate;
@@ -69,7 +72,7 @@ public class InsuranceController {
     @RequestMapping(value = "/contracts", method = RequestMethod.POST)
     public String saveOrUpdateContract(@ModelAttribute("contractForm") @Validated ContractDto contractDto,
                                    BindingResult result, Model model,
-                                   final RedirectAttributes redirectAttributes) throws ParseException {
+                                   final RedirectAttributes redirectAttributes) throws ParseException, ServiceException {
         LOGGER.info("saveOrUpdateContract() : {}", contractDto);
         if (result.hasErrors()) {
             initModel(model);
@@ -105,7 +108,7 @@ public class InsuranceController {
     }
 
     @RequestMapping(value = "/contracts/{id}/update", method = RequestMethod.GET)
-    public String showUpdateContractForm(@PathVariable("id") int id, Model model) {
+    public String showUpdateContractForm(@PathVariable("id") int id, Model model) throws ServiceException {
         LOGGER.info("showUpdateContractForm() : {}", id);
         model.addAttribute("contractForm", ContractConverter.convertToDto(service.findById(id), modelMapper));
 
@@ -116,7 +119,7 @@ public class InsuranceController {
 
     @RequestMapping(value = "/contracts/{id}/remove", method = RequestMethod.POST)
     public String removeContract(@PathVariable("id") int id,
-                             final RedirectAttributes redirectAttributes) {
+                             final RedirectAttributes redirectAttributes) throws ServiceException {
         LOGGER.info("removeContract() : {}", id);
         service.remove(id);
         redirectAttributes.addFlashAttribute("css", "success");
@@ -127,6 +130,7 @@ public class InsuranceController {
 
     @RequestMapping(value = "/contracts/excel", method = RequestMethod.GET)
     public String loadToExcel(final RedirectAttributes redirectAttributes) throws IOException {
+
         LOGGER.info("loadToExcel()");
         List<Contract> contracts = service.findAll();
         List<ContractDto> dtos = contracts.stream()
@@ -140,7 +144,7 @@ public class InsuranceController {
     }
 
     @RequestMapping(value = "/contracts/{id}", method = RequestMethod.GET)
-    public String showContract(@PathVariable("id") int id, Model model) {
+    public String showContract(@PathVariable("id") int id, Model model) throws ServiceException {
         LOGGER.info("showContract() id: {}", id);
         ContractDto contractDto = ContractConverter.convertToDto(service.findById(id), modelMapper);
         if (contractDto == null) {
@@ -159,6 +163,16 @@ public class InsuranceController {
             types.put(typeList.get(i), typeList.get(i));
         }
         model.addAttribute("typeList", types);
+    }
+
+    @ExceptionHandler({ServiceException.class, RuntimeException.class})
+    public ModelAndView handleError(HttpServletRequest req, Exception ex) {
+        LOGGER.error("Request: " + req.getRequestURL() + " raised " + ex);
+
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("message", ex.getMessage());
+        mav.setViewName("error");
+        return mav;
     }
 
 }

@@ -106,12 +106,5 @@
 
 <jsp:include page="../fragments/footer.jsp" />
 
-<script>
-    $(document).ready(function() {
-        //zebraRows('tbody tr:odd td', 'odd');
-    });
-</script>
-
-
 </body>
 </html>

@@ -1,6 +1,6 @@
 package sergio.ru.insurancetest.exception;
 
-public class ServiceException extends RuntimeException {
+public class ServiceException extends Exception {
 
     public ServiceException(String message) {
         super(message);
