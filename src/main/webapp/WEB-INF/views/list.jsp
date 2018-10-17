@@ -57,7 +57,13 @@
             <td><input type="text" class="form-control" name="filterRste" value="" id="filterRate" /></td>
             <td><input type="text" class="form-control" name="filterSumNds" value="" id="filterSumNds" /></td>
             <td><input type="text" class="form-control" name="filterSumWithNds" value="" id="filterSumWithNds" /></td>
-            <td><input type="text" class="form-control" name="filterAccord" value="" id="filterAccord" /></td>
+            <td>
+                <select class="form-control" id="filterAccord">
+                    <option>ВСЕ</option>
+                    <option>Да</option>
+                    <option>Нет</option>
+                </select>
+            </td>
             <td><input type="text" class="form-control" name="filterTS" value="" id="filterTS" /></td>
             <td colspan="3"></td>
         </tr>

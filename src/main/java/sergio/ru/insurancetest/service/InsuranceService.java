@@ -21,4 +21,6 @@ public interface InsuranceService {
     List<String> getAllContractTypes();
 
     void loadToExcel(List<ContractDto> contractDtoList) throws IOException;
+
+    List<String> findAllVehicles();
 }

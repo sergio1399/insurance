@@ -1,5 +1,5 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-
+<%@ page session="false" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <head>
 <title>Spring MVC test Insurance</title>
 	<spring:url value="/resources/static/hello.css" var="coreCss" />
@@ -19,10 +19,10 @@
 			<a class="navbar-brand" href="${urlHome}">Spring MVC Form</a>
 		</div>
 		<div id="navbar">
-			<button class="btn btn-dark"
-					onclick="location.href='${urlAddContract}'">Add contract</button>
+			<button class="btn btn-light"
+					onclick="location.href='${urlAddContract}'">Добавить контракт</button>
 			<button class="btn btn-success"
-					onclick="location.href='${excelUrl}'">Load to Excel</button>
+					onclick="location.href='${excelUrl}'">Выгрузить в Excel</button>
 		</div>
 	</div>
 </nav>

@@ -146,8 +146,9 @@
             <div class="form-group ${status.error ? 'has-error' : ''}">
                 <label class="col-sm-2 control-label">Номер ТС</label>
                 <div class="col-sm-10">
-                    <form:input path="vehicleNumber" type="text" class="form-control"
-                                id="vehicleNumber" placeholder="vehicleNumber" />
+                    <form:select path="vehicleNumber" class="form-control">
+                        <form:options items="${vehicleList}" />
+                    </form:select>
                     <form:errors path="vehicleNumber" class="control-label" />
                 </div>
             </div>

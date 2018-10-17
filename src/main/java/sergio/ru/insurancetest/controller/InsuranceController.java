@@ -163,9 +163,16 @@ public class InsuranceController {
             types.put(typeList.get(i), typeList.get(i));
         }
         model.addAttribute("typeList", types);
+
+        List<String> vehicleList = service.findAllVehicles();
+        Map<String, String> vehicles = new LinkedHashMap<String, String>();
+        for (int i = 0; i < vehicleList.size(); i++) {
+            vehicles.put(vehicleList.get(i), vehicleList.get(i));
+        }
+        model.addAttribute("vehicleList", vehicles);
     }
 
-    @ExceptionHandler({ServiceException.class, RuntimeException.class})
+    @ExceptionHandler({ServiceException.class, IOException.class, RuntimeException.class})
     public ModelAndView handleError(HttpServletRequest req, Exception ex) {
         LOGGER.error("Request: " + req.getRequestURL() + " raised " + ex);
 

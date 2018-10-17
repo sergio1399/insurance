@@ -60,8 +60,23 @@
     </div>
 
     <div class="row">
+        <label class="col-sm-2">Сумма без НДС</label>
+        <div class="col-sm-10">${contract.sumNoNds}</div>
+    </div>
+
+    <div class="row">
+        <label class="col-sm-2">Ставка НДС</label>
+        <div class="col-sm-10">${contract.ndsRate}</div>
+    </div>
+
+    <div class="row">
         <label class="col-sm-2">Номер ТС</label>
         <div class="col-sm-10">${contract.vehicleNumber}</div>
+    </div>
+
+    <div class="row">
+        <label class="col-sm-2">Соответствие мин. сумме</label>
+        <div class="col-sm-10">${contract.accord}</div>
     </div>
 
     <div class="row">

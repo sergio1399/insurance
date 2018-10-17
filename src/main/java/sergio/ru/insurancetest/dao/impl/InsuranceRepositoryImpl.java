@@ -58,6 +58,8 @@ public class InsuranceRepositoryImpl implements InsuranceRepository {
 
     private static final String CONTRACT_TYPE_QUERY = "SELECT * FROM ContractType WHERE id=:id";
 
+    private static final String ALL_VEHICLES_QUERY = "SELECT * FROM Vehicle";
+
     private static final String ERROR_MESSAGE = "Ошибка данных";
 
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -67,19 +69,15 @@ public class InsuranceRepositoryImpl implements InsuranceRepository {
     }
 
     @Override
-    public Contract findById(Integer id) throws ServiceException {
+    public Contract findById(Integer id){
+        if (id == null)
+            return null;
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("id", id);
         String sql = FIND_BY_ID_QUERY;
 
-        Contract result = null;
-        try {
-            result = namedParameterJdbcTemplate
+        Contract result = namedParameterJdbcTemplate
                     .queryForObject(sql, params, new ContractMapper());
-        } catch (EmptyResultDataAccessException e) {
-            LOGGER.error("No contract found with id {}", id);
-            throw new ServiceException(ERROR_MESSAGE);
-        }
 
         return result;
     }
@@ -172,6 +170,16 @@ public class InsuranceRepositoryImpl implements InsuranceRepository {
         List<ContractType> types = namedParameterJdbcTemplate.query(sql, new ContractTypeMapper());
         List<String> result = types.stream()
                 .map(contractType -> contractType.getName())
+                .collect(Collectors.toList());
+        return result;
+    }
+
+    @Override
+    public List<String> findAllVehicles() {
+        String sql = ALL_VEHICLES_QUERY;
+        List<Vehicle> vehicles = namedParameterJdbcTemplate.query(sql, new VehicleMapper());
+        List<String> result = vehicles.stream()
+                .map(vehicle -> vehicle.getNumber())
                 .collect(Collectors.toList());
         return result;
     }

@@ -26,12 +26,6 @@ function zebraRows(selector, className)
     $(selector).removeClass(className).addClass(className);
 }
 
-/*$('tbody tr').hover(function(){
-    $(this).find('td').addClass('hovered');
-}, function(){
-    $(this).find('td').removeClass('hovered');
-});
-*/
 //filter results based on query
 function filter(selector, query, tdId) {
     query =   $.trim(query); //trim white space
@@ -43,10 +37,10 @@ function filter(selector, query, tdId) {
 }
 
 function strictFilter(selector, query, tdId) {
-    query =   $.trim(query); //trim white space
+    //query =   $.trim(query);
 
     $(selector).each(function() {
-        ($(this).children(tdId).text().search(new RegExp(query, "i")) < 0) ? $(this).hide().removeClass('visible') : $(this).show().addClass('visible');
+        ($(this).children(tdId).text() === query) ? $(this).show().addClass('visible') : $(this).hide().removeClass('visible');
     });
 }
 
@@ -69,22 +63,16 @@ $('#filterSN').keyup(function(event) {
         filter('tbody tr', $(this).val(), '#seriaNumber');
     }
 
-    //reapply zebra rows
-    //$('.visible td').removeClass('odd');
-    //zebraRows('.visible:odd td', 'odd');
 });
 
 $('#filterType').change(function() {
-    if ($(this).val() == 'ALL') {
+    if ($(this).val() == 'ВСЕ') {
         $('tbody tr').removeClass('visible').show().addClass('visible');
 	}
     else {
-        filter('tbody tr', $(this).val(), '#contractType');
+        strictFilter('tbody tr', $(this).val(), '#contractType');
     }
 
-    //reapply zebra rows
-    $('.visible td').removeClass('odd');
-    zebraRows('.visible:odd td', 'odd');
 });
 
 $('#filterSign').keyup(function(event) {
@@ -99,13 +87,9 @@ $('#filterSign').keyup(function(event) {
     }
 
     //if there is text, lets filter
-    else {
+    else if (event.keyCode == 13) {
         strictFilter('tbody tr', $(this).val(), '#signDate');
     }
-
-    //reapply zebra rows
-    $('.visible td').removeClass('odd');
-    zebraRows('.visible:odd td', 'odd');
 });
 
 $('#filterOpen').keyup(function(event) {
@@ -120,13 +104,9 @@ $('#filterOpen').keyup(function(event) {
     }
 
     //if there is text, lets filter
-    else {
+    else if (event.keyCode == 13) {
         strictFilter('tbody tr', $(this).val(), '#openDate');
     }
-
-    //reapply zebra rows
-    $('.visible td').removeClass('odd');
-    zebraRows('.visible:odd td', 'odd');
 });
 
 $('#filterExp').keyup(function(event) {
@@ -141,13 +121,9 @@ $('#filterExp').keyup(function(event) {
     }
 
     //if there is text, lets filter
-    else {
+    else if (event.keyCode == 13) {
         strictFilter('tbody tr', $(this).val(), '#expDate');
     }
-
-    //reapply zebra rows
-    $('.visible td').removeClass('odd');
-    zebraRows('.visible:odd td', 'odd');
 });
 
 $('#filterSumNoNds').keyup(function(event) {
@@ -162,13 +138,9 @@ $('#filterSumNoNds').keyup(function(event) {
     }
 
     //if there is text, lets filter
-    else {
+    else if (event.keyCode == 13) {
         strictFilter('tbody tr', $(this).val(), '#sumNoNds');
     }
-
-    //reapply zebra rows
-    $('.visible td').removeClass('odd');
-    zebraRows('.visible:odd td', 'odd');
 });
 
 $('#filterRate').keyup(function(event) {
@@ -183,13 +155,9 @@ $('#filterRate').keyup(function(event) {
     }
 
     //if there is text, lets filter
-    else {
+    else if (event.keyCode == 13) {
         strictFilter('tbody tr', $(this).val(), '#ndsRate');
     }
-
-    //reapply zebra rows
-    $('.visible td').removeClass('odd');
-    zebraRows('.visible:odd td', 'odd');
 });
 
 $('#filterSumNds').keyup(function(event) {
@@ -204,13 +172,9 @@ $('#filterSumNds').keyup(function(event) {
     }
 
     //if there is text, lets filter
-    else {
+    else if (event.keyCode == 13) {
         strictFilter('tbody tr', $(this).val(), '#ndsSum');
     }
-
-    //reapply zebra rows
-    $('.visible td').removeClass('odd');
-    zebraRows('.visible:odd td', 'odd');
 });
 
 $('#filterSumWithNds').keyup(function(event) {
@@ -225,34 +189,19 @@ $('#filterSumWithNds').keyup(function(event) {
     }
 
     //if there is text, lets filter
-    else {
+    else if (event.keyCode == 13) {
         strictFilter('tbody tr', $(this).val(), '#sumWithNds');
     }
-
-    //reapply zebra rows
-    $('.visible td').removeClass('odd');
-    zebraRows('.visible:odd td', 'odd');
 });
 
-$('#filterAccord').keyup(function(event) {
-    //if esc is pressed or nothing is entered
-    if (event.keyCode == 27 || $(this).val() == '') {
-        //if esc is pressed we want to clear the value of search box
-        $(this).val('');
-
-        //we want each row to be visible because if nothing
-        //is entered then all rows are matched.
+$('#filterAccord').change(function() {
+    if ($(this).val() == 'ВСЕ') {
         $('tbody tr').removeClass('visible').show().addClass('visible');
     }
-
-    //if there is text, lets filter
     else {
         strictFilter('tbody tr', $(this).val(), '#accord');
     }
 
-    //reapply zebra rows
-    $('.visible td').removeClass('odd');
-    zebraRows('.visible:odd td', 'odd');
 });
 
 $('#filterTS').keyup(function(event) {
@@ -270,8 +219,4 @@ $('#filterTS').keyup(function(event) {
     else {
         filter('tbody tr', $(this).val(), '#vehicle');
     }
-
-    //reapply zebra rows
-    $('.visible td').removeClass('odd');
-    zebraRows('.visible:odd td', 'odd');
 });

@@ -76,4 +76,11 @@ public class InsuranceServiceImpl implements InsuranceService {
         LOGGER.info("InsuranceService loadToExcel()");
         integrationService.loadToExcel(contractDtoList);
     }
+
+    @Transactional
+    @Override
+    public List<String> findAllVehicles() {
+        LOGGER.info("InsuranceService findAllVehicles()");
+        return repository.findAllVehicles();
+    }
 }

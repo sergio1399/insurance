@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface InsuranceRepository {
 
-    Contract findById(Integer id) throws ServiceException;
+    Contract findById(Integer id);
 
     ContractType findType(Integer id) throws ServiceException;
 
@@ -24,4 +24,6 @@ public interface InsuranceRepository {
     void remove(Integer id) throws ServiceException;
 
     List<String> getAllContractTypes();
+
+    List<String> findAllVehicles();
 }
