@@ -42,6 +42,19 @@ public class ContractFormValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "sumWithNds", "NotEmpty.contractForm.sumWithNds");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "vehicleNumber", "NotEmpty.contractForm.vehicleNumber");
 
+        if (contract.getNdsSum() < 0) {
+            errors.rejectValue("ndsSum", "Arithmetic.contractForm.ndsSum");
+        }
+
+        if (contract.getSumWithNds() < 0) {
+            errors.rejectValue("sumWithNds", "Arithmetic.contractForm.sumWithNds");
+        }
+
+        if (contract.getSumWithNds() < contract.getNdsSum()) {
+            errors.rejectValue("ndsSum", "Arithmetic.contractForm.ndsSum");
+            errors.rejectValue("sumWithNds", "Arithmetic.contractForm.sumWithNds");
+        }
+
         if (contract.getSignDate() != null && contract.getSignDate().isBefore(LocalDate.now())) {
             errors.rejectValue("signDate", "TooEarly.contractForm.signDate");
         }
